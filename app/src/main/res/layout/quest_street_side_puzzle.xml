@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -30,5 +32,16 @@
 
         <!-- note the other compass in fragment_main -->
         <include layout="@layout/view_little_compass"/>
+
+        <de.westnordost.streetcomplete.view.StreetSideButton
+            android:id="@+id/PickLastLeftRightButton"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_alignBottom="@id/puzzleView"
+            android:layout_alignParentRight="true"
+            tools:ignore="RtlHardcoded"/>
+
     </RelativeLayout>
+
 </LinearLayout>

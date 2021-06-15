@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.AnyThread
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isGone
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPolylinesGeometry
 import de.westnordost.streetcomplete.quests.AbstractQuestFormAnswerFragment
@@ -13,6 +14,7 @@ import de.westnordost.streetcomplete.view.ResImage
 import de.westnordost.streetcomplete.view.image_select.Item
 import de.westnordost.streetcomplete.view.image_select.ImageListPickerDialog
 import kotlinx.android.synthetic.main.quest_street_side_puzzle.*
+import kotlinx.android.synthetic.main.side_select_puzzle.view.*
 import kotlinx.android.synthetic.main.view_little_compass.*
 
 class AddSidewalkForm : AbstractQuestFormAnswerFragment<SidewalkAnswer>() {
@@ -40,13 +42,37 @@ class AddSidewalkForm : AbstractQuestFormAnswerFragment<SidewalkAnswer>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        puzzleView.onClickSideListener = { isRight -> showSidewalkSelectionDialog(isRight) }
-
-        streetSideRotater = StreetSideRotater(puzzleView, compassNeedleView, elementGeometry as ElementPolylinesGeometry)
-
         val defaultResId =
             if (isLeftHandTraffic) R.drawable.ic_sidewalk_unknown_l
             else                   R.drawable.ic_sidewalk_unknown
+
+        PickLastLeftRightButton.isGone = (LAST_ANSWER_LEFT == null).and(LAST_ANSWER_RIGHT == null)
+        if (!(LAST_ANSWER_LEFT == null).and(LAST_ANSWER_RIGHT == null)) {
+            PickLastLeftRightButton.setLeftSideImage(ResImage(LAST_ANSWER_LEFT?.puzzleResId ?: defaultResId))
+            PickLastLeftRightButton.setRightSideImage(ResImage(LAST_ANSWER_RIGHT?.puzzleResId ?: defaultResId))
+
+            PickLastLeftRightButton.setOnClickListener {
+                leftSide = LAST_ANSWER_LEFT
+                rightSide = LAST_ANSWER_RIGHT
+                puzzleView.setLeftSideImage(ResImage(leftSide?.puzzleResId ?: defaultResId))
+                puzzleView.setRightSideImage(ResImage(rightSide?.puzzleResId ?: defaultResId))
+
+                if( LAST_ANSWER_LEFT== LAST_ANSWER_RIGHT) {
+                    PickLastLeftRightButton.visibility = View.GONE
+                }
+                else{
+                    PickLastLeftRightButton.setLeftSideImage(ResImage(rightSide?.puzzleResId ?: defaultResId))
+                    PickLastLeftRightButton.setRightSideImage(ResImage(leftSide?.puzzleResId ?: defaultResId))
+                    LAST_ANSWER_LEFT = rightSide
+                    LAST_ANSWER_RIGHT = leftSide
+                }
+                checkIsFormComplete()
+            }
+        }
+
+        puzzleView.onClickSideListener = { isRight -> showSidewalkSelectionDialog(isRight) }
+
+        streetSideRotater = StreetSideRotater(puzzleView, compassNeedleView, elementGeometry as ElementPolylinesGeometry)
 
         puzzleView.setLeftSideImage(ResImage(leftSide?.puzzleResId ?: defaultResId))
         puzzleView.setRightSideImage(ResImage(rightSide?.puzzleResId ?: defaultResId))
@@ -71,6 +97,9 @@ class AddSidewalkForm : AbstractQuestFormAnswerFragment<SidewalkAnswer>() {
     }
 
     override fun onClickOk() {
+        LAST_ANSWER_LEFT = leftSide
+        LAST_ANSWER_RIGHT = rightSide
+
         applyAnswer(SidewalkSides(
             left = leftSide == Sidewalk.YES,
             right = rightSide == Sidewalk.YES
@@ -106,6 +135,7 @@ class AddSidewalkForm : AbstractQuestFormAnswerFragment<SidewalkAnswer>() {
             }
             checkIsFormComplete()
         }.show()
+        PickLastLeftRightButton.visibility = View.GONE
     }
 
     private enum class Sidewalk(val iconResId: Int, val puzzleResId: Int, val nameResId: Int) {
@@ -120,5 +150,9 @@ class AddSidewalkForm : AbstractQuestFormAnswerFragment<SidewalkAnswer>() {
         private const val SIDEWALK_RIGHT = "sidewalk_right"
 
         private var HAS_SHOWN_TAP_HINT = false
+
+        private var LAST_ANSWER_LEFT: Sidewalk? = null
+        private var LAST_ANSWER_RIGHT: Sidewalk? = null
+
     }
 }
