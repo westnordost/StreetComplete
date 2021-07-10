@@ -66,6 +66,8 @@ import de.westnordost.streetcomplete.quests.clothing_bin_operator.AddClothingBin
 import de.westnordost.streetcomplete.quests.diet_type.AddKosher
 import de.westnordost.streetcomplete.quests.drinking_water.AddDrinkingWater
 import de.westnordost.streetcomplete.quests.existence.CheckExistence
+import de.westnordost.streetcomplete.quests.fuel_service.AddFuelFullService
+import de.westnordost.streetcomplete.quests.fuel_service.AddFuelSelfService
 import de.westnordost.streetcomplete.quests.lanes.AddLanes
 import de.westnordost.streetcomplete.quests.kerb_height.AddKerbHeight
 import de.westnordost.streetcomplete.quests.orchard_produce.AddOrchardProduce
@@ -217,6 +219,7 @@ import javax.inject.Singleton
         MarkCompletedBuildingConstruction(),
         AddGeneralFee(),
         AddSelfServiceLaundry(),
+        AddFuelSelfService(),
         AddStepsIncline(), // can be gathered while walking perpendicular to the way e.g. the other side of the road or when running/cycling past
         AddHandrail(), // for accessibility of pedestrian routing, can be gathered when walking past
         AddStepCount(), // can only be gathered when walking along this way, also needs the most effort and least useful
@@ -243,6 +246,7 @@ import javax.inject.Singleton
         AddParkingType(),
         AddPostboxRef(),
         AddWheelchairAccessToiletsPart(),
+        AddFuelFullService(),
         AddBoardType(),
         AddPoliceType(),
         AddPowerPolesMaterial(),

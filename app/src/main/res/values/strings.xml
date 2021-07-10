@@ -600,6 +600,11 @@ Otherwise, you can download another keyboard in the app store. Popular keyboards
     <string name="quest_construction_footway_title">Is this footway completed?</string>
     <string name="quest_construction_generic_title">Is this way completed?</string>
     <string name="quest_construction_building_title">Is this building completed?</string>
+    <string name="quest_fuelFullService_title">Does this fuel station offer full service?</string>
+    <string name="quest_fuelFullService_name_title">Does %s offer full service?</string>
+    <string name="quest_fuelFullService_type_only">It only offers full service</string>
+    <string name="quest_fuelSelfService_title">Does this fuel station offer self service?</string>
+    <string name="quest_fuelSelfService_name_title">Does %s offer self service?</string>
     <string name="questList_disabled_in_country">Never shown in %s</string>
     <string name="quest_toiletAvailability_rest_area_title">Does this rest area have restroom facilities?</string>
     <string name="quest_maxspeed_name_title2">What is the speed limit for %s here?</string>
