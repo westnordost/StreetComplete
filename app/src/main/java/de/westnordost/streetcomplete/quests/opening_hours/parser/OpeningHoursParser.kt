@@ -53,9 +53,30 @@ fun OpeningHoursRuleList.toOpeningHoursRows(): List<OpeningHoursRow>? {
     return result
 }
 
+/** returns null if the list of rules cannot be displayed by the opening hours widget */
+fun OpeningHoursRuleList.toCollectionTimesRows(): List<OpeningHoursRow>? {
+    if (!isSupportedCollectionTimes()) {
+        // parsable, but not supported by StreetComplete
+        return null
+    }
+
+    val result = mutableListOf<OpeningHoursRow>()
+
+    for (rule in rules) {
+        if (rule.modifier != null && rule.modifier!!.isSimpleOff()) {
+            result.add(rule.createOffDays())
+        } else {
+            result.addAll(rule.createOpeningWeekdays())
+        }
+    }
+
+    return result
+}
+
 /* ---------------------------------- Checks if it is supported --------------------------------- */
 
 fun OpeningHoursRuleList.isSupported(): Boolean = rules.isSupported()
+fun OpeningHoursRuleList.isSupportedCollectionTimes(): Boolean = rules.isSupportedCollectionTimes()
 
 /** Returns true if supported by StreetComplete
  * Returns false otherwise, in cases where it is not directly representable
@@ -70,6 +91,16 @@ fun List<Rule>.isSupported(): Boolean =
     // this kind of opening hours specification likely require fix
     // anyway, it is not representable directly by SC
     (!weekdaysCollideWithAnother())
+
+/** Returns true if the collection times are supported by StreetComplete
+ * Returns false otherwise, in cases where it is not directly representable */
+@JvmName("isSupportedCollectionTimesRuleList")
+fun List<Rule>.isSupportedCollectionTimes(): Boolean =
+    // all rules must be supported
+    all { it.isSupportedCollectionTimes() } &&
+        // this kind of collection times specification likely require fix
+        // anyway, it is not representable directly by SC
+        (!weekdaysCollideWithAnother())
 
 fun Rule.isSupported(): Boolean =
     !isEmpty &&
@@ -94,6 +125,32 @@ fun Rule.isSupported(): Boolean =
     days?.all { it.isSupported() } ?: true &&
     times?.all { it.isSupported() } ?: true &&
     dates?.all { it.isSupported() } ?: true
+
+fun Rule.isSupportedCollectionTimes(): Boolean =
+    !isEmpty &&
+    // 24/7 not supported
+    !isTwentyfourseven &&
+    // comments not supported
+    comment == null &&
+    // fallback rules are not supported
+    !isFallBack &&
+    // "1995-1998 08:00-11:00" not supported
+    years == null &&
+    // "05-08 08:00-11:00" not supported
+    weeks == null &&
+    (
+        // for normal rules, only "Mo-Fr" not supported. "open" modifier is ok as long as it does not have a comment
+        (modifier == null || modifier!!.isSimpleOpen()) && !times.isNullOrEmpty() ||
+        // "off"/"closed" only compatible without comment and no times
+        (modifier != null && times.isNullOrEmpty() && modifier!!.isSimpleOff())
+    ) &&
+    // all sub-elements must be supported if specified
+    holidays?.all { it.isSupported() } ?: true &&
+    days?.all { it.isSupported() } ?: true &&
+    // only time points are supported for collection times
+    times?.all { it.isSupportedCollectionTimes() } ?: true &&
+    // months not supported
+    dates == null
 
 fun DateRange.isSupported(): Boolean =
     startDate.isSupported() && (endDate?.isSupported() ?: true) && interval == 0
@@ -138,6 +195,14 @@ fun TimeSpan.isSupported(): Boolean =
     startEvent == null && endEvent == null &&
     interval == 0 &&
     start != TimeSpan.UNDEFINED_TIME
+
+fun TimeSpan.isSupportedCollectionTimes(): Boolean =
+    // "sunrise" etc not supported
+    startEvent == null && endEvent == null &&
+    interval == 0 &&
+    start != TimeSpan.UNDEFINED_TIME &&
+    // only support time points
+    end == TimeSpan.UNDEFINED_TIME
 
 /* ------------------------------ Collision/Intersection checking ------------------------------- */
 
@@ -226,7 +291,8 @@ private fun WeekDayRange.expandedToNextDay(): WeekDayRange = WeekDayRange().also
     it.endDay = values[(end.ordinal+1) % values.size]
 }
 
-private fun TimeSpan.expandsIntoNextDay(): Boolean = end < start || end > 24 * 60
+private fun TimeSpan.expandsIntoNextDay(): Boolean =
+    end != TimeSpan.UNDEFINED_TIME && (end < start || end > 24 * 60)
 
 private fun Rule.createOpeningWeekdays(): List<OpeningWeekdaysRow> {
     val weekdays = WeekDayRangesAndHolidays(days, holidays).toWeekdays()
@@ -274,7 +340,7 @@ private fun List<DateRange>.toMonths(): Months {
 
 private fun TimeSpan.toTimeRange() = TimeRange(
     start,
-    if (end != TimeSpan.UNDEFINED_TIME) end % (24 * 60) else start,
+    if (end != TimeSpan.UNDEFINED_TIME) end % (24 * 60) else TimeRange.UNDEFINED_TIME,
     isOpenEnded
 )
 

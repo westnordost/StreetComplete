@@ -586,6 +586,8 @@ Otherwise, you can download another keyboard in the app store. Popular keyboards
     <string name="quest_cycleway_value_suggestion_lane">bicycle suggestion lane</string>
     <string name="quest_postboxCollectionTimes_title">What are the collection times of this postbox?</string>
     <string name="quest_postboxCollectionTimes_name_title">What are the collection times of this %s postbox?</string>
+    <string name="quest_postboxCollectionTimes_resurvey_title">Are the collection times of this postbox still correct?</string>
+    <string name="quest_postboxCollectionTimes_resurvey_name_title">Are the collection times of this %s postbox still correct?</string>
     <string name="quest_postboxRef_title">What is the reference number of this postbox?</string>
     <string name="quest_postboxRef_name_title">What is the reference number of this %s postbox?</string>
     <string name="quest_ref_answer_noRef">"No reference number visible…"</string>

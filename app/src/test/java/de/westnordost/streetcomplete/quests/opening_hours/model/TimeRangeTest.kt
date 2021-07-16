@@ -77,5 +77,15 @@ class TimeRangeTest {
             "00:00 - 24:00",
             TimeRange(0, 0).toStringUsing(Locale.GERMANY, " - ")
         )
+
+        assertEquals(
+            "12:00 AM",
+            TimeRange(0).toStringUsing(Locale.US, " - ")
+        )
+
+        assertEquals(
+            "00:00",
+            TimeRange(0).toStringUsing(Locale.GERMANY, " - ")
+        )
     }
 }
