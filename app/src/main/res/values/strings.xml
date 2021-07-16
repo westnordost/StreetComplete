@@ -369,6 +369,7 @@ Otherwise, you can download another keyboard in the app store. Popular keyboards
     <string name="credits_and_more">and more…</string>
     <string name="quest_maxspeed_answer_living_street">It is a living street</string>
     <string name="quest_maxspeed_answer_living_street_confirmation_title">So, there is a sign like this?</string>
+    <string name="quest_crossing_title">Is this spot suitable to cross the road and is it legal to do so here?</string>
     <string name="quest_crossing_type_title">What kind of crossing is this?</string>
     <string name="quest_crossing_type_signals_controlled">Crossing controlled by traffic lights</string>
     <string name="quest_crossing_type_marked">Marked crossing</string>

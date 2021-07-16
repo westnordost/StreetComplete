@@ -506,7 +506,8 @@ object AchievementsModule {
                     "AddBenchStatusOnBusStop",
                     "AddBusStopLit",
                     "AddCrossingIsland",
-                    "AddBarrierType"
+                    "AddBarrierType",
+                    "AddCrossing"
                 )
             ),
             // levels: 10, 30, 60, 100, 150, 210, 280, 360, 450, 550, 660, 780, 910, 1050, ...

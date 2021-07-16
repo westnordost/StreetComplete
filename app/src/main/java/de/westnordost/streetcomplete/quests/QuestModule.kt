@@ -63,6 +63,7 @@ import de.westnordost.streetcomplete.quests.camera_type.AddCameraType
 import de.westnordost.streetcomplete.quests.charging_station_capacity.AddChargingStationCapacity
 import de.westnordost.streetcomplete.quests.charging_station_operator.AddChargingStationOperator
 import de.westnordost.streetcomplete.quests.clothing_bin_operator.AddClothingBinOperator
+import de.westnordost.streetcomplete.quests.crossing.AddCrossing
 import de.westnordost.streetcomplete.quests.diet_type.AddKosher
 import de.westnordost.streetcomplete.quests.drinking_water.AddDrinkingWater
 import de.westnordost.streetcomplete.quests.existence.CheckExistence
@@ -137,6 +138,7 @@ import javax.inject.Singleton
         CheckExistence(featureDictionaryFuture),
         AddSuspectedOneway(trafficFlowSegmentsApi, trafficFlowDao),
         AddBarrierType(), // basically any more detailed rendering and routing: OSM Carto, mapy.cz, OSMand for start
+        AddCrossing(),
         AddCycleway(), // for any cyclist routers (and cyclist maps)
         AddSidewalk(), // for any pedestrian routers
         AddBusStopName(),
