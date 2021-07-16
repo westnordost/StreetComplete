@@ -1,59 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:orientation="vertical">
 
-        <me.grantland.widget.AutofitLayout
-            android:id="@+id/houseNumberInputContainer"
-            android:layout_width="112dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_white_corners">
+            android:layout_centerInParent="true">
 
-            <EditText
-                android:id="@+id/houseNumberInput"
-                android:layout_width="match_parent"
+            <me.grantland.widget.AutofitLayout
+                android:id="@+id/houseNumberInputContainer"
+                android:layout_width="112dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_housenumber_frame"
-                app:backgroundTint="@color/traffic_blue"
-                android:imeOptions="actionDone"
-                android:textColorHint="#2fff"
-                android:digits="0123456789.,- /"
-                style="@style/HousenumberEditText"
-                />
+                android:background="@drawable/background_white_corners">
 
-        </me.grantland.widget.AutofitLayout>
+                <EditText
+                    android:id="@+id/houseNumberInput"
+                    style="@style/HousenumberEditText"
+                    app:backgroundTint="@color/traffic_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_housenumber_frame"
+                    android:digits="0123456789.,- /"
+                    android:imeOptions="actionDone"
+                    android:textColorHint="#2fff" />
 
-        <FrameLayout
-            android:layout_width="56dp"
-            android:layout_height="0dp"
-            android:layout_toRightOf="@id/houseNumberInputContainer"
-            android:layout_alignBottom="@id/houseNumberInputContainer"
-            android:layout_alignTop="@id/houseNumberInputContainer"
-            android:layout_marginLeft="8dp"
-            tools:ignore="RtlHardcoded">
+            </me.grantland.widget.AutofitLayout>
 
-            <include layout="@layout/view_plus_minus_control"/>
+            <FrameLayout
+                android:layout_width="56dp"
+                android:layout_height="0dp"
+                android:layout_alignTop="@id/houseNumberInputContainer"
+                android:layout_alignBottom="@id/houseNumberInputContainer"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/houseNumberInputContainer"
+                tools:ignore="RtlHardcoded">
 
-        </FrameLayout>
+                <include layout="@layout/view_plus_minus_control" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/toggleKeyboardButton"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            tools:ignore="RtlHardcoded"
+            tools:text="ABC" />
 
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/toggleKeyboardButton"
-        android:layout_width="64dp"
-        android:layout_height="56dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        tools:text="ABC"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        tools:ignore="RtlHardcoded" />
-
-</RelativeLayout>
+</merge>

@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:id="@+id/replaceRadioContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/replaceRadioContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/replaceRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/quest_shop_gone_replaced_answer" />
+
+            <AutoCompleteTextView
+                android:id="@+id/presetsEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:completionThreshold="2"
+                android:dropDownAnchor="@id/replaceRadioContainer"
+                android:hint="@string/quest_shop_gone_replaced_answer_hint" />
+
+        </LinearLayout>
 
         <RadioButton
-            android:id="@+id/replaceRadioButton"
-            android:text="@string/quest_shop_gone_replaced_answer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <AutoCompleteTextView
-            android:id="@+id/presetsEditText"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:id="@+id/vacantRadioButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dropDownAnchor="@id/replaceRadioContainer"
-            android:completionThreshold="2"
-            android:hint="@string/quest_shop_gone_replaced_answer_hint"/>
+            android:text="@string/quest_shop_gone_vacant_answer" />
+
+        <RadioButton
+            android:id="@+id/leaveNoteRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quest_streetName_answer_noProperStreet_leaveNote" />
 
     </LinearLayout>
-
-    <RadioButton
-        android:id="@+id/vacantRadioButton"
-        android:text="@string/quest_shop_gone_vacant_answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <RadioButton
-        android:id="@+id/leaveNoteRadioButton"
-        android:text="@string/quest_streetName_answer_noProperStreet_leaveNote"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+</merge>

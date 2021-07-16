@@ -37,9 +37,9 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.AllCountriesExcept
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
+import de.westnordost.streetcomplete.databinding.RowQuestSelectionBinding
 import de.westnordost.streetcomplete.ktx.containsAny
 import de.westnordost.streetcomplete.settings.genericQuestTitle
-import kotlinx.android.synthetic.main.row_quest_selection.view.*
 
 /** Adapter for the list that in which the user can enable and disable quests as well as re-order
  *  them */
@@ -69,8 +69,8 @@ class QuestSelectionAdapter @Inject constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<QuestVisibility> {
-        val layout = LayoutInflater.from(parent.context).inflate(R.layout.row_quest_selection, parent, false)
-        return QuestVisibilityViewHolder(layout)
+        return QuestVisibilityViewHolder(RowQuestSelectionBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     private inner class TouchHelperCallback : ItemTouchHelper.Callback() {
@@ -123,14 +123,14 @@ class QuestSelectionAdapter @Inject constructor(
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
     }
 
-    private inner class QuestVisibilityViewHolder(itemView: View) :
-        ListAdapter.ViewHolder<QuestVisibility>(itemView), CompoundButton.OnCheckedChangeListener {
+    private inner class QuestVisibilityViewHolder(binding : RowQuestSelectionBinding) :
+        ListAdapter.ViewHolder<QuestVisibility>(binding), CompoundButton.OnCheckedChangeListener {
 
-        private val dragHandle: ImageView = itemView.dragHandle
-        private val questIcon: ImageView = itemView.questIcon
-        private val questTitle: TextView = itemView.questTitle
-        private val visibilityCheckBox: CheckBox = itemView.visibilityCheckBox
-        private val countryDisabledText: TextView = itemView.countryDisabledText
+        private val dragHandle: ImageView = binding.dragHandle
+        private val questIcon: ImageView = binding.questIcon
+        private val questTitle: TextView = binding.questTitle
+        private val visibilityCheckBox: CheckBox = binding.visibilityCheckBox
+        private val countryDisabledText: TextView = binding.countryDisabledText
         lateinit var item: QuestVisibility
 
         private val isEnabledInCurrentCountry: Boolean

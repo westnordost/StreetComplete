@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:textSize="48dp"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/capacityMultiplierLabel"
-        android:minEms="1"
-        android:id="@+id/capacityInput"
-        android:inputType="number"
-        android:maxLines="1"
-        />
+        android:gravity="bottom">
 
-    <TextView
-        android:id="@+id/capacityMultiplierLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="38dp"
-        android:layout_centerInParent="true"
-        android:padding="6dp"
-        android:text=" × "
-        tools:ignore="HardcodedText"/>
+        <EditText
+            android:id="@+id/capacityInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/capacityMultiplierLabel"
+            android:inputType="number"
+            android:maxLines="1"
+            android:minEms="1"
+            android:textSize="48dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/capacityMultiplierLabel"
-        android:id="@+id/capacityBikeImage"
-        android:background="@drawable/ic_electric_car"/>
+        <TextView
+            android:id="@+id/capacityMultiplierLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="6dp"
+            android:text=" × "
+            android:textSize="38dp"
+            tools:ignore="HardcodedText" />
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/capacityBikeImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/capacityMultiplierLabel"
+            android:background="@drawable/ic_electric_car" />
+
+    </RelativeLayout>
+</merge>

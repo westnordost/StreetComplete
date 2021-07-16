@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.RowChangelogBinding
 import de.westnordost.streetcomplete.ktx.getYamlObject
 import de.westnordost.streetcomplete.view.ListAdapter
-import kotlinx.android.synthetic.main.row_changelog.view.*
 import kotlinx.coroutines.*
 
 /** Shows the full changelog */
@@ -73,12 +73,12 @@ class WhatsNewDialog(context: Context, sinceVersion: String)
 class ChangelogAdapter(changelog: List<Release>) : ListAdapter<Release>(changelog) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder  =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_changelog, parent, false))
+        ViewHolder(RowChangelogBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-    inner class ViewHolder(itemView: View) : ListAdapter.ViewHolder<Release>(itemView) {
+    inner class ViewHolder(val binding: RowChangelogBinding) : ListAdapter.ViewHolder<Release>(binding) {
         override fun onBind(with: Release) {
-            itemView.titleLabel.text = with.title
-            itemView.descriptionLabel.setHtml(with.description)
+            binding.titleLabel.text = with.title
+            binding.descriptionLabel.setHtml(with.description)
         }
     }
 }

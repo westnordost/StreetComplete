@@ -12,23 +12,25 @@ import javax.inject.Inject
 
 import de.westnordost.streetcomplete.Injector
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.QuestBuildingLevelsBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.AbstractQuestFormAnswerFragment
 import de.westnordost.streetcomplete.quests.LastPickedValuesStore
 import de.westnordost.streetcomplete.quests.OtherAnswer
 import de.westnordost.streetcomplete.util.TextChangedWatcher
 
-import kotlinx.android.synthetic.main.quest_building_levels.*
-
 class AddBuildingLevelsForm : AbstractQuestFormAnswerFragment<BuildingLevelsAnswer>() {
 
     override val contentLayoutResId = R.layout.quest_building_levels
+
+    private val binding by viewBinding(QuestBuildingLevelsBinding::bind)
 
     override val otherAnswers = listOf(
         OtherAnswer(R.string.quest_buildingLevels_answer_multipleLevels) { showMultipleLevelsHint() }
     )
 
-    private val levels get() = levelsInput?.text?.toString().orEmpty().trim()
-    private val roofLevels get() = roofLevelsInput?.text?.toString().orEmpty().trim()
+    private val levels get() = binding.levelsInput?.text?.toString().orEmpty().trim()
+    private val roofLevels get() = binding.roofLevelsInput?.text?.toString().orEmpty().trim()
 
     private val lastPickedAnswers by lazy {
         favs.get(javaClass.simpleName).map { it.toBuildingLevelAnswer() }
@@ -47,16 +49,16 @@ class AddBuildingLevelsForm : AbstractQuestFormAnswerFragment<BuildingLevelsAnsw
             checkIsFormComplete()
         }
 
-        levelsInput.requestFocus()
-        levelsInput.addTextChangedListener(onTextChangedListener)
-        roofLevelsInput.addTextChangedListener(onTextChangedListener)
+        binding.levelsInput.requestFocus()
+        binding.levelsInput.addTextChangedListener(onTextChangedListener)
+        binding.roofLevelsInput.addTextChangedListener(onTextChangedListener)
 
-        lastPickedButtons.adapter = LastPickedAdapter(lastPickedAnswers, ::onLastPickedButtonClicked)
+        binding.lastPickedButtons.adapter = LastPickedAdapter(lastPickedAnswers, ::onLastPickedButtonClicked)
     }
 
     private fun onLastPickedButtonClicked(position: Int) {
-        levelsInput.setText(lastPickedAnswers[position].levels.toString())
-        roofLevelsInput.setText(lastPickedAnswers[position].roofLevels?.toString() ?: "")
+        binding.levelsInput.setText(lastPickedAnswers[position].levels.toString())
+        binding.roofLevelsInput.setText(lastPickedAnswers[position].roofLevels?.toString() ?: "")
     }
 
     override fun onClickOk() {

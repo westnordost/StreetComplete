@@ -15,12 +15,13 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.user.UserStore
 import de.westnordost.streetcomplete.data.user.achievements.Achievement
 import de.westnordost.streetcomplete.data.user.achievements.UserAchievementsSource
+import de.westnordost.streetcomplete.databinding.CellAchievementBinding
+import de.westnordost.streetcomplete.databinding.FragmentAchievementsBinding
 import de.westnordost.streetcomplete.ktx.awaitLayout
 import de.westnordost.streetcomplete.ktx.toPx
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.view.GridLayoutSpacingItemDecoration
 import de.westnordost.streetcomplete.view.ListAdapter
-import kotlinx.android.synthetic.main.cell_achievement.view.*
-import kotlinx.android.synthetic.main.fragment_achievements.*
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -30,6 +31,8 @@ class AchievementsFragment : Fragment(R.layout.fragment_achievements) {
 
     @Inject internal lateinit var userAchievementsSource: UserAchievementsSource
     @Inject internal lateinit var userStore: UserStore
+
+    private val binding by viewBinding(FragmentAchievementsBinding::bind)
 
     private var actualCellWidth: Int = 0
 
@@ -53,22 +56,22 @@ class AchievementsFragment : Fragment(R.layout.fragment_achievements) {
         viewLifecycleOwner.lifecycleScope.launch {
             view.awaitLayout()
 
-            emptyText.visibility = View.GONE
+            binding.emptyText.visibility = View.GONE
 
             val spanCount = (view.width / (minCellWidth + itemSpacing)).toInt()
             actualCellWidth = (view.width.toFloat() / spanCount - itemSpacing).toInt()
 
             val layoutManager = GridLayoutManager(ctx, spanCount, RecyclerView.VERTICAL, false)
-            achievementsList.layoutManager = layoutManager
-            achievementsList.addItemDecoration(GridLayoutSpacingItemDecoration(itemSpacing))
-            achievementsList.clipToPadding = false
+            binding.achievementsList.layoutManager = layoutManager
+            binding.achievementsList.addItemDecoration(GridLayoutSpacingItemDecoration(itemSpacing))
+            binding.achievementsList.clipToPadding = false
 
             val achievements = withContext(Dispatchers.IO) {
                 userAchievementsSource.getAchievements()
             }
-            achievementsList.adapter = AchievementsAdapter(achievements)
+            binding.achievementsList.adapter = AchievementsAdapter(achievements)
 
-            emptyText.isGone = achievements.isNotEmpty()
+            binding.emptyText.isGone = achievements.isNotEmpty()
         }
     }
 
@@ -76,9 +79,9 @@ class AchievementsFragment : Fragment(R.layout.fragment_achievements) {
         super.onStart()
 
         if (userStore.isSynchronizingStatistics) {
-            emptyText.setText(R.string.stats_are_syncing)
+            binding.emptyText.setText(R.string.stats_are_syncing)
         } else {
-            emptyText.setText(R.string.achievements_empty)
+            binding.emptyText.setText(R.string.achievements_empty)
         }
     }
 
@@ -88,22 +91,22 @@ class AchievementsFragment : Fragment(R.layout.fragment_achievements) {
     ) : ListAdapter<Pair<Achievement, Int>>(achievements) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.cell_achievement, parent, false)
-            view.updateLayoutParams {
+            val binding = CellAchievementBinding.inflate(LayoutInflater.from(parent.context),parent, false)
+            binding.root.updateLayoutParams {
                 width = actualCellWidth
                 height = actualCellWidth
             }
-            return ViewHolder(view)
+            return ViewHolder(binding)
         }
 
-        inner class ViewHolder(itemView: View) : ListAdapter.ViewHolder<Pair<Achievement, Int>>(itemView) {
+        inner class ViewHolder(val binding : CellAchievementBinding) : ListAdapter.ViewHolder<Pair<Achievement, Int>>(binding) {
             override fun onBind(with: Pair<Achievement, Int>) {
                 val achievement = with.first
                 val level = with.second
-                itemView.achievementIconView.icon = resources.getDrawable(achievement.icon)
-                itemView.achievementIconView.level = level
-                itemView.achievementIconView.setOnClickListener {
-                    listener?.onClickedAchievement(achievement, level, itemView.achievementIconView)
+                binding.achievementIconView.icon = resources.getDrawable(achievement.icon)
+                binding.achievementIconView.level = level
+                binding.achievementIconView.setOnClickListener {
+                    listener?.onClickedAchievement(achievement, level, binding.achievementIconView)
                 }
             }
         }

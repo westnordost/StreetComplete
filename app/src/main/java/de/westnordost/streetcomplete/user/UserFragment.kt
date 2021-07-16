@@ -12,25 +12,28 @@ import com.google.android.material.tabs.TabLayout.TAB_LABEL_VISIBILITY_UNLABELED
 import com.google.android.material.tabs.TabLayoutMediator
 import de.westnordost.streetcomplete.HasTitle
 import de.westnordost.streetcomplete.R
-import kotlinx.android.synthetic.main.fragment_user.*
+import de.westnordost.streetcomplete.databinding.FragmentUserBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 
 /** Shows the viewpager with the user profile, user statistics, achievements and links */
 class UserFragment : Fragment(R.layout.fragment_user), HasTitle {
 
     override val title: String get() = getString(R.string.user_profile)
 
+    private val binding by viewBinding(FragmentUserBinding::bind)
+
     /* --------------------------------------- Lifecycle --------------------------------------- */
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewPager.adapter = object : FragmentStateAdapter(requireActivity()) {
+        binding.viewPager.adapter = object : FragmentStateAdapter(requireActivity()) {
             override fun getItemCount() = PAGES.size
             override fun createFragment(position: Int) = PAGES[position].creator()
         }
-        tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        tabLayout.tabMode = TabLayout.MODE_FIXED
-        TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
+        binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
+        binding.tabLayout.tabMode = TabLayout.MODE_FIXED
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab: TabLayout.Tab, position: Int ->
             val page = PAGES[position]
             tab.setIcon(page.icon)
             tab.setText(page.title)

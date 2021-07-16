@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:divider="@drawable/space_8dp"
-    android:showDividers="middle">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quest_address_street_place_name_label"/>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_placename"
+        android:divider="@drawable/space_8dp"
         android:orientation="vertical"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp">
+        android:showDividers="middle">
 
-        <me.grantland.widget.AutofitLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quest_address_street_place_name_label" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/background_placename"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/placeNameInput"
+            <me.grantland.widget.AutofitLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#000000ff"
-                android:inputType="text"
-                android:imeOptions="actionDone"
-                android:textAlignment="center"
-                android:maxLines="1"
-                android:textColor="#000"
-                android:textSize="32dp"
-                tools:text="The cool place" />
+                android:padding="8dp">
 
-        </me.grantland.widget.AutofitLayout>
+                <EditText
+                    android:id="@+id/placeNameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#000000ff"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="32dp"
+                    tools:text="The cool place" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_town_silhouette"
-            android:paddingBottom="4dp"
-            android:scaleType="center"/>
+            </me.grantland.widget.AutofitLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_town_silhouette" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</merge>

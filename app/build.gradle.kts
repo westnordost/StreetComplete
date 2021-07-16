@@ -5,7 +5,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("kotlin-android-extensions")
+//    id("kotlin-android-extensions")
     kotlin("plugin.serialization") version "1.5.0"
 }
 
@@ -57,6 +57,11 @@ android {
             applicationIdSuffix = ".debug"
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
 
     lintOptions {
         disable("MissingTranslation")

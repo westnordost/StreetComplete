@@ -12,20 +12,23 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import androidx.core.view.isGone
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.QuestMaxspeedBinding
 import de.westnordost.streetcomplete.ktx.numberOrNull
 import de.westnordost.streetcomplete.ktx.showKeyboard
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.AbstractQuestFormAnswerFragment
 import de.westnordost.streetcomplete.quests.OtherAnswer
 import de.westnordost.streetcomplete.quests.max_speed.SpeedMeasurementUnit.KILOMETERS_PER_HOUR
 import de.westnordost.streetcomplete.quests.max_speed.SpeedMeasurementUnit.MILES_PER_HOUR
 import de.westnordost.streetcomplete.quests.max_speed.SpeedType.*
 import de.westnordost.streetcomplete.util.TextChangedWatcher
-import kotlinx.android.synthetic.main.quest_maxspeed.*
 
 
 class AddMaxSpeedForm : AbstractQuestFormAnswerFragment<MaxSpeedAnswer>() {
 
     override val contentLayoutResId = R.layout.quest_maxspeed
+
+    private val binding by viewBinding(QuestMaxspeedBinding::bind)
 
     override val otherAnswers: List<OtherAnswer> get() {
         val result = mutableListOf<OtherAnswer>()
@@ -47,15 +50,15 @@ class AddMaxSpeedForm : AbstractQuestFormAnswerFragment<MaxSpeedAnswer>() {
         val highwayTag = osmElement!!.tags["highway"]!!
 
         val couldBeSlowZone = countryInfo.isSlowZoneKnown && POSSIBLY_SLOWZONE_ROADS.contains(highwayTag)
-        zone.isGone = !couldBeSlowZone
+        binding.zone.isGone = !couldBeSlowZone
 
         val couldBeLivingStreet = countryInfo.isLivingStreetKnown && MAYBE_LIVING_STREET.contains(highwayTag)
-        living_street.isGone = !couldBeLivingStreet
+        binding.livingStreet.isGone = !couldBeLivingStreet
 
         val couldBeNSL = countryInfo.countryCode == "GB"
-        nsl.isGone = !couldBeNSL
+        binding.nsl.isGone = !couldBeNSL
 
-        speedTypeSelect.setOnCheckedChangeListener { _, checkedId -> setSpeedType(getSpeedType(checkedId)) }
+        binding.speedTypeSelect.setOnCheckedChangeListener { _, checkedId -> setSpeedType(getSpeedType(checkedId)) }
     }
 
     override fun onClickOk() {
@@ -89,22 +92,22 @@ class AddMaxSpeedForm : AbstractQuestFormAnswerFragment<MaxSpeedAnswer>() {
     private fun setSpeedType(speedType: SpeedType?) {
         this.speedType = speedType
 
-        rightSideContainer.removeAllViews()
-        speedType?.layoutResId?.let { layoutInflater.inflate(it, rightSideContainer, true) }
+        binding.rightSideContainer.removeAllViews()
+        speedType?.layoutResId?.let { layoutInflater.inflate(it, binding.rightSideContainer, true) }
 
         // this is necessary because the inflated image view uses the activity context rather than
         // the fragment / layout inflater context' resources to access its drawable
-        val imgLiving = rightSideContainer.findViewById<ImageView>(R.id.livingStreetImage)
+        val imgLiving = binding.rightSideContainer.findViewById<ImageView>(R.id.livingStreetImage)
         imgLiving?.setImageDrawable(resources.getDrawable(R.drawable.ic_living_street))
 
-        val imgNSL = rightSideContainer.findViewById<ImageView>(R.id.nationalSpeedLimitImage)
+        val imgNSL = binding.rightSideContainer.findViewById<ImageView>(R.id.nationalSpeedLimitImage)
         imgNSL?.setImageDrawable(resources.getDrawable(R.drawable.ic_national_speed_limit))
 
-        speedInput = rightSideContainer.findViewById(R.id.maxSpeedInput)
+        speedInput = binding.rightSideContainer.findViewById(R.id.maxSpeedInput)
 
         speedInput?.addTextChangedListener(TextChangedWatcher { checkIsFormComplete() })
 
-        speedUnitSelect = rightSideContainer.findViewById(R.id.speedUnitSelect)
+        speedUnitSelect = binding.rightSideContainer.findViewById(R.id.speedUnitSelect)
         speedUnitSelect?.isGone = speedUnits.size == 1
         speedUnitSelect?.adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_centered, speedUnits)
         speedUnitSelect?.setSelection(0)
@@ -144,8 +147,8 @@ class AddMaxSpeedForm : AbstractQuestFormAnswerFragment<MaxSpeedAnswer>() {
     }
 
     private fun switchToAdvisorySpeedLimit() {
-        speedTypeSelect.clearCheck()
-        for (child in speedTypeSelect.children) {
+        binding.speedTypeSelect.clearCheck()
+        for (child in binding.speedTypeSelect.children) {
             child.isEnabled = false
         }
         setSpeedType(ADVISORY)

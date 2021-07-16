@@ -29,11 +29,12 @@ import de.westnordost.streetcomplete.data.osm.mapdata.ElementType
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.quest.*
+import de.westnordost.streetcomplete.databinding.FragmentQuestAnswerBinding
 import de.westnordost.streetcomplete.ktx.geometryType
 import de.westnordost.streetcomplete.ktx.isArea
 import de.westnordost.streetcomplete.ktx.isSomeKindOfShop
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.shop_type.ShopGoneDialog
-import kotlinx.android.synthetic.main.fragment_quest_answer.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -49,6 +50,7 @@ abstract class AbstractQuestAnswerFragment<T> : AbstractBottomSheetFragment(), I
     private val countryInfos: CountryInfos
     private val questTypeRegistry: QuestTypeRegistry
     private val featureDictionaryFuture: FutureTask<FeatureDictionary>
+    private val binding by viewBinding(FragmentQuestAnswerBinding::bind)
 
     private var _countryInfo: CountryInfo? = null // lazy but resettable because based on lateinit var
         get() {
@@ -154,12 +156,12 @@ abstract class AbstractQuestAnswerFragment<T> : AbstractBottomSheetFragment(), I
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        titleLabel.text = resources.getHtmlQuestTitle(questType, osmElement, featureDictionaryFuture)
+        binding.titleLabel.text = resources.getHtmlQuestTitle(questType, osmElement, featureDictionaryFuture)
 
         val levelLabelText = getLocationLabelText()
-        locationLabel.isGone = levelLabelText == null
+        binding.locationLabel.isGone = levelLabelText == null
         if (levelLabelText != null) {
-            locationLabel.text = levelLabelText
+            binding.locationLabel.text = levelLabelText
         }
 
         // no content? -> hide the content container

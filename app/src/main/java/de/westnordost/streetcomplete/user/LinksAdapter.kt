@@ -5,28 +5,28 @@ import android.view.View
 import android.view.ViewGroup
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.user.achievements.Link
+import de.westnordost.streetcomplete.databinding.RowLinkItemBinding
 import de.westnordost.streetcomplete.view.ListAdapter
-import kotlinx.android.synthetic.main.row_link_item.view.*
 
 /** Adapter for a list of links */
 class LinksAdapter(links: List<Link>, private val onClickLink: (url: String) -> Unit)
     : ListAdapter<Link>(links) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_link_item, parent, false))
+        ViewHolder(RowLinkItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-    inner class ViewHolder(itemView: View) : ListAdapter.ViewHolder<Link>(itemView) {
+    inner class ViewHolder(val binding: RowLinkItemBinding) : ListAdapter.ViewHolder<Link>(binding) {
         override fun onBind(with: Link) {
             if (with.icon != null) {
-                itemView.linkIconImageView.setImageResource(with.icon)
+                binding.linkIconImageView.setImageResource(with.icon)
             } else {
-                itemView.linkIconImageView.setImageDrawable(null)
+                binding.linkIconImageView.setImageDrawable(null)
             }
-            itemView.linkTitleTextView.text = with.title
+            binding.linkTitleTextView.text = with.title
             if (with.description != null) {
-                itemView.linkDescriptionTextView.setText(with.description)
+                binding.linkDescriptionTextView.setText(with.description)
             } else {
-                itemView.linkDescriptionTextView.text = ""
+                binding.linkDescriptionTextView.text = ""
             }
             itemView.setOnClickListener { onClickLink(with.url) }
         }

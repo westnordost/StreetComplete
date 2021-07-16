@@ -7,6 +7,9 @@ import android.view.View
 
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPolylinesGeometry
+import de.westnordost.streetcomplete.databinding.QuestStreetSidePuzzleBinding
+import de.westnordost.streetcomplete.databinding.ViewLittleCompassBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.AbstractQuestFormAnswerFragment
 import de.westnordost.streetcomplete.quests.StreetSideRotater
 import de.westnordost.streetcomplete.quests.steps_incline.StepsIncline.*
@@ -16,14 +19,15 @@ import de.westnordost.streetcomplete.view.ResImage
 import de.westnordost.streetcomplete.view.ResText
 import de.westnordost.streetcomplete.view.RotatedCircleDrawable
 import de.westnordost.streetcomplete.view.image_select.*
-import kotlinx.android.synthetic.main.quest_street_side_puzzle.*
-import kotlinx.android.synthetic.main.view_little_compass.*
 import kotlin.math.PI
 
 class AddStepsInclineForm : AbstractQuestFormAnswerFragment<StepsIncline>() {
 
     override val contentLayoutResId = R.layout.quest_oneway
     override val contentPadding = false
+
+    private val questStreetPuzzleBinding by viewBinding(QuestStreetSidePuzzleBinding::bind)
+    private val viewLittleCompassBinding by viewBinding(ViewLittleCompassBinding::bind)
 
     private var streetSideRotater: StreetSideRotater? = null
 
@@ -43,19 +47,19 @@ class AddStepsInclineForm : AbstractQuestFormAnswerFragment<StepsIncline>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        puzzleView.showOnlyRightSide()
-        puzzleView.onClickSideListener = { showDirectionSelectionDialog() }
+        questStreetPuzzleBinding.puzzleView.showOnlyRightSide()
+        questStreetPuzzleBinding.puzzleView.onClickSideListener = { showDirectionSelectionDialog() }
 
         val defaultResId = R.drawable.ic_steps_incline_unknown
 
-        puzzleView.setRightSideImage(ResImage(selection?.iconResId ?: defaultResId))
-        puzzleView.setRightSideText(selection?.titleResId?.let { resources.getString(it) })
+        questStreetPuzzleBinding.puzzleView.setRightSideImage(ResImage(selection?.iconResId ?: defaultResId))
+        questStreetPuzzleBinding.puzzleView.setRightSideText(selection?.titleResId?.let { resources.getString(it) })
         if (selection == null && !HAS_SHOWN_TAP_HINT) {
-            puzzleView.showRightSideTapHint()
+            questStreetPuzzleBinding.puzzleView.showRightSideTapHint()
             HAS_SHOWN_TAP_HINT = true
         }
 
-        streetSideRotater = StreetSideRotater(puzzleView, compassNeedleView, elementGeometry as ElementPolylinesGeometry)
+        streetSideRotater = StreetSideRotater(questStreetPuzzleBinding.puzzleView, viewLittleCompassBinding.compassNeedleView, elementGeometry as ElementPolylinesGeometry)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -79,8 +83,8 @@ class AddStepsInclineForm : AbstractQuestFormAnswerFragment<StepsIncline>() {
         val items = StepsIncline.values().map { it.toItem(resources, wayRotation + mapRotation) }
         ImageListPickerDialog(ctx, items, R.layout.labeled_icon_button_cell, 2) { selected ->
             val dir = selected.value!!
-            puzzleView.replaceRightSideImage(ResImage(dir.iconResId))
-            puzzleView.setRightSideText(resources.getString(dir.titleResId))
+            questStreetPuzzleBinding.puzzleView.replaceRightSideImage(ResImage(dir.iconResId))
+            questStreetPuzzleBinding.puzzleView.setRightSideText(resources.getString(dir.titleResId))
             selection = dir
             checkIsFormComplete()
         }.show()

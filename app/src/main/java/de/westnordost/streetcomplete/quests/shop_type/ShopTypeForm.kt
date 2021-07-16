@@ -9,35 +9,38 @@ import de.westnordost.osmfeatures.StringUtils
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
+import de.westnordost.streetcomplete.databinding.ViewShopTypeBinding
 import de.westnordost.streetcomplete.ktx.geometryType
 import de.westnordost.streetcomplete.ktx.isSomeKindOfShop
 import de.westnordost.streetcomplete.ktx.toTypedArray
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.AbstractQuestFormAnswerFragment
 import de.westnordost.streetcomplete.util.TextChangedWatcher
-import kotlinx.android.synthetic.main.view_shop_type.*
 
 class ShopTypeForm : AbstractQuestFormAnswerFragment<ShopTypeAnswer>() {
 
     override val contentLayoutResId = R.layout.view_shop_type
 
+    private val binding by viewBinding(ViewShopTypeBinding::bind)
+
     private lateinit var radioButtons: List<RadioButton>
     private var selectedRadioButtonId: Int = 0
 
-    private val shopTypeText get() = presetsEditText.text?.toString().orEmpty().trim()
+    private val shopTypeText get() = binding.presetsEditText.text?.toString().orEmpty().trim()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        radioButtons = listOf(vacantRadioButton, replaceRadioButton, leaveNoteRadioButton)
+        radioButtons = listOf(binding.vacantRadioButton, binding.replaceRadioButton, binding.leaveNoteRadioButton)
         for (radioButton in radioButtons) {
             radioButton.setOnClickListener { selectRadioButton(it) }
         }
-        presetsEditText.setAdapter(SearchAdapter(requireContext(), { term -> getFeatures(term) }, { it.name }))
-        presetsEditText.setOnClickListener { selectRadioButton(replaceRadioButton) }
-        presetsEditText.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) selectRadioButton(replaceRadioButton)
+        binding.presetsEditText.setAdapter(SearchAdapter(requireContext(), { term -> getFeatures(term) }, { it.name }))
+        binding.presetsEditText.setOnClickListener { selectRadioButton(binding.replaceRadioButton) }
+        binding.presetsEditText.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) selectRadioButton(binding.replaceRadioButton)
         }
-        presetsEditText.addTextChangedListener(TextChangedWatcher { checkIsFormComplete() })
+        binding.presetsEditText.addTextChangedListener(TextChangedWatcher { checkIsFormComplete() })
     }
 
     override fun onClickOk() {
@@ -47,7 +50,7 @@ class ShopTypeForm : AbstractQuestFormAnswerFragment<ShopTypeAnswer>() {
             R.id.replaceRadioButton   -> {
                 val feature = getSelectedFeature()
                 if (feature == null) {
-                    presetsEditText.error = context?.resources?.getText(R.string.quest_shop_gone_replaced_answer_error)
+                    binding.presetsEditText.error = context?.resources?.getText(R.string.quest_shop_gone_replaced_answer_error)
                 } else {
                     applyAnswer(ShopType(feature.addTags))
                 }
@@ -71,7 +74,7 @@ class ShopTypeForm : AbstractQuestFormAnswerFragment<ShopTypeAnswer>() {
     }
 
     private fun getSelectedFeature(): Feature? {
-        val input = presetsEditText.text.toString()
+        val input = binding.presetsEditText.text.toString()
         return getFeatures(input).firstOrNull()?.takeIf { it.canonicalName == StringUtils.canonicalize(input) }
     }
 

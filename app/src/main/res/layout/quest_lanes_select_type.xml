@@ -1,107 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:weightSum="1"
-    android:animateLayoutChanges="true">
-
-    <TextView
-        android:id="@+id/selectHintLabel"
-        android:text="@string/quest_roofShape_select_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/selectHintLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quest_roofShape_select_one" />
 
         <LinearLayout
-            android:id="@+id/markedLanesButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:background="@drawable/image_select_cell_rounded">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/markedLanesButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp"
-                android:paddingTop="6dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_lanes_marked"
-                android:adjustViewBounds="true"/>
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/image_select_cell_rounded"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingStart="6dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="6dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_lanes_marked" />
+
+                <TextView
+                    style="@style/ImageSelectLabelBelow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quest_lanes_answer_lanes" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/unmarkedLanesButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                style="@style/ImageSelectLabelBelow"
-                android:text="@string/quest_lanes_answer_lanes"/>
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/image_select_cell_rounded"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingStart="6dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="6dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_lanes_unmarked" />
 
-        <LinearLayout
-            android:id="@+id/unmarkedLanesButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:background="@drawable/image_select_cell_rounded">
+                <TextView
+                    style="@style/ImageSelectLabelBelow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quest_lanes_answer_noLanes" />
 
-            <ImageView
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/markedLanesOddButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp"
-                android:paddingTop="6dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_lanes_unmarked"
-                android:adjustViewBounds="true"/>
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/image_select_cell_rounded"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/ImageSelectLabelBelow"
-                android:text="@string/quest_lanes_answer_noLanes"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingStart="6dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="6dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_lanes_marked_odd" />
 
-        </LinearLayout>
+                <TextView
+                    style="@style/ImageSelectLabelBelow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quest_lanes_answer_lanes_odd2" />
 
-        <LinearLayout
-            android:id="@+id/markedLanesOddButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:background="@drawable/image_select_cell_rounded">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp"
-                android:paddingTop="6dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_lanes_marked_odd"
-                android:adjustViewBounds="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/ImageSelectLabelBelow"
-                android:text="@string/quest_lanes_answer_lanes_odd2"/>
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</merge>

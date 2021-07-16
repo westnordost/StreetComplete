@@ -28,14 +28,15 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.maptiles.MapTilesDownloadCacheConfig
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
+import de.westnordost.streetcomplete.databinding.FragmentMapBinding
 import de.westnordost.streetcomplete.ktx.awaitLayout
 import de.westnordost.streetcomplete.ktx.containsAll
 import de.westnordost.streetcomplete.ktx.setMargins
 import de.westnordost.streetcomplete.ktx.tryStartActivity
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.map.components.SceneMapComponent
 import de.westnordost.streetcomplete.map.tangram.*
 import de.westnordost.streetcomplete.view.insets_animation.respectSystemInsets
-import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.coroutines.launch
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -50,6 +51,8 @@ open class MapFragment : Fragment(),
 
     protected lateinit var mapView: MapView
     private set
+
+    private val binding by viewBinding(FragmentMapBinding::bind)
 
     private val defaultCameraInterpolator = AccelerateDecelerateInterpolator()
 
@@ -112,11 +115,11 @@ open class MapFragment : Fragment(),
         mapView = view.findViewById(R.id.map)
         mapView.onCreate(savedInstanceState)
 
-        openstreetmapLink.setOnClickListener { showOpenUrlDialog("https://www.openstreetmap.org/copyright") }
-        mapTileProviderLink.text = vectorTileProvider.copyrightText
-        mapTileProviderLink.setOnClickListener { showOpenUrlDialog(vectorTileProvider.copyrightLink) }
+        binding.openstreetmapLink.setOnClickListener { showOpenUrlDialog("https://www.openstreetmap.org/copyright") }
+        binding.mapTileProviderLink.text = vectorTileProvider.copyrightText
+        binding.mapTileProviderLink.setOnClickListener { showOpenUrlDialog(vectorTileProvider.copyrightLink) }
 
-        attributionContainer.respectSystemInsets(View::setMargins)
+        binding.attributionContainer.respectSystemInsets(View::setMargins)
 
         lifecycleScope.launch { initMap() }
     }

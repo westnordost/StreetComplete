@@ -15,9 +15,10 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.data.user.QuestStatisticsDao
+import de.westnordost.streetcomplete.databinding.FragmentQuestStatisticsBallPitBinding
 import de.westnordost.streetcomplete.ktx.toPx
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.view.CircularOutlineProvider
-import kotlinx.android.synthetic.main.fragment_quest_statistics_ball_pit.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,6 +36,8 @@ class QuestStatisticsByQuestTypeFragment : Fragment(R.layout.fragment_quest_stat
     }
     private val listener: Listener? get() = parentFragment as? Listener ?: activity as? Listener
 
+    private val binding by viewBinding(FragmentQuestStatisticsBallPitBinding::bind)
+
     init {
         Injector.applicationComponent.inject(this)
     }
@@ -44,11 +47,11 @@ class QuestStatisticsByQuestTypeFragment : Fragment(R.layout.fragment_quest_stat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycle.addObserver(ballPitView)
+        lifecycle.addObserver(binding.ballPitView)
 
         lifecycleScope.launch {
             val solvedQuestsByQuestType = getSolvedQuestsByQuestType()
-            ballPitView.setViews(solvedQuestsByQuestType.map { (questType, amount) ->
+            binding.ballPitView.setViews(solvedQuestsByQuestType.map { (questType, amount) ->
                 createQuestTypeBubbleView(questType, amount) to amount
             })
         }

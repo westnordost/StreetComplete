@@ -6,8 +6,9 @@ import androidx.core.os.bundleOf
 
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.quest.QuestKey
-import kotlinx.android.synthetic.main.form_leave_note.*
-import kotlinx.android.synthetic.main.fragment_quest_answer.*
+import de.westnordost.streetcomplete.databinding.FormLeaveNoteBinding
+import de.westnordost.streetcomplete.databinding.FragmentQuestAnswerBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -19,6 +20,9 @@ class LeaveNoteInsteadFragment : AbstractCreateNoteFragment(), IsShowingQuestDet
         fun onCreatedNoteInstead(questKey: QuestKey, questTitle: String, note: String, imagePaths: List<String>)
     }
     private val listener: Listener? get() = parentFragment as? Listener ?: activity as? Listener
+
+    private val binding by viewBinding(FragmentQuestAnswerBinding::bind)
+    private val formLeaveNoteBinding by viewBinding(FormLeaveNoteBinding::bind)
 
     override val layoutResId = R.layout.fragment_quest_answer
 
@@ -35,8 +39,8 @@ class LeaveNoteInsteadFragment : AbstractCreateNoteFragment(), IsShowingQuestDet
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        titleLabel.text = getString(R.string.map_btn_create_note)
-        descriptionLabel.text = null
+        binding.titleLabel.text = getString(R.string.map_btn_create_note)
+        formLeaveNoteBinding.descriptionLabel.text = null
     }
 
     override fun onComposedNote(text: String, imagePaths: List<String>) {

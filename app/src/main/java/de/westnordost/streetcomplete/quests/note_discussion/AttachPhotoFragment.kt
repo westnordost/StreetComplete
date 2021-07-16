@@ -23,10 +23,11 @@ import de.westnordost.streetcomplete.ApplicationConstants.ATTACH_PHOTO_MAXHEIGHT
 import de.westnordost.streetcomplete.ApplicationConstants.ATTACH_PHOTO_QUALITY
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osmnotes.deleteImages
+import de.westnordost.streetcomplete.databinding.FragmentAttachPhotoBinding
 import de.westnordost.streetcomplete.ktx.toast
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.util.AdapterDataChangedWatcher
 import de.westnordost.streetcomplete.util.decodeScaledBitmapAndNormalize
-import kotlinx.android.synthetic.main.fragment_attach_photo.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -36,6 +37,8 @@ class AttachPhotoFragment : Fragment() {
     val imagePaths: List<String> get() = noteImageAdapter.list
     private var photosListView : RecyclerView? = null
     private var hintView : TextView? = null
+
+    private val binding by viewBinding(FragmentAttachPhotoBinding::bind)
 
     private var currentImagePath: String? = null
 
@@ -66,7 +69,7 @@ class AttachPhotoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        takePhotoButton.setOnClickListener { takePhoto() }
+        binding.takePhotoButton.setOnClickListener { takePhoto() }
 
         val paths: ArrayList<String>
         if (savedInstanceState != null) {
@@ -78,12 +81,12 @@ class AttachPhotoFragment : Fragment() {
         }
 
         noteImageAdapter = NoteImageAdapter(paths, requireContext())
-        gridView.layoutManager = LinearLayoutManager(
+        binding.gridView.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL,
             false
         )
-        gridView.adapter = noteImageAdapter
+        binding.gridView.adapter = noteImageAdapter
         noteImageAdapter.registerAdapterDataObserver(AdapterDataChangedWatcher { updateHintVisibility() })
         updateHintVisibility()
     }

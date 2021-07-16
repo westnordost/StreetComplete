@@ -1,58 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioGroup
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/radioButtonGroup" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RadioButton
-        android:id="@+id/history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_board_type_history" />
+    <RadioGroup
+        android:id="@+id/radioButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <RadioButton
-        android:id="@+id/geology"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_board_type_geology" />
+        <RadioButton
+            android:id="@+id/history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_board_type_history" />
 
-    <RadioButton
-        android:id="@+id/plants"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_board_type_plants" />
+        <RadioButton
+            android:id="@+id/geology"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_board_type_geology" />
 
-    <RadioButton
-        android:id="@+id/wildlife"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_board_type_wildlife" />
+        <RadioButton
+            android:id="@+id/plants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_board_type_plants" />
 
-    <RadioButton
-        android:id="@+id/nature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_board_type_nature" />
+        <RadioButton
+            android:id="@+id/wildlife"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_board_type_wildlife" />
 
-    <RadioButton
-        android:id="@+id/public_transport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_board_type_public_transport" />
+        <RadioButton
+            android:id="@+id/nature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_board_type_nature" />
+
+        <RadioButton
+            android:id="@+id/public_transport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_board_type_public_transport" />
 
 
-    <RadioButton
-        android:id="@+id/notice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_board_type_notice_board" />
+        <RadioButton
+            android:id="@+id/notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_board_type_notice_board" />
 
-</RadioGroup>
+    </RadioGroup>
+</merge>

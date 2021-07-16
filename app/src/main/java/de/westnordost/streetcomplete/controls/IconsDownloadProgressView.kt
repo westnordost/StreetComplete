@@ -5,9 +5,9 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.ViewIconsDownloadProgressBinding
 import de.westnordost.streetcomplete.ktx.toPx
 import de.westnordost.streetcomplete.view.CircularMaskFrameLayout
-import kotlinx.android.synthetic.main.view_icons_download_progress.view.*
 import java.util.Queue
 import java.util.LinkedList
 
@@ -21,17 +21,19 @@ class IconsDownloadProgressView @JvmOverloads constructor(
 
     private var currentView: IconProgressView? = null
     private val iconQueue: Queue<Drawable> = LinkedList()
+    private val binding : ViewIconsDownloadProgressBinding
 
     init {
-        inflate(context, R.layout.view_icons_download_progress, this)
+        val view = inflate(context, R.layout.view_icons_download_progress, this)
+        binding = ViewIconsDownloadProgressBinding.bind(view)
     }
 
     /** set the given icon and resets the queue */
     fun setIcon(icon: Drawable) = synchronized(this) {
         iconQueue.clear()
-        currentView?.let { iconProgressViewContainer.removeView(it) }
+        currentView?.let { binding.iconProgressViewContainer.removeView(it) }
         val newView = createProgressView(icon)
-        iconProgressViewContainer.addView(newView)
+        binding.iconProgressViewContainer.addView(newView)
         newView.showProgressAnimation()
         currentView = newView
     }
@@ -61,7 +63,7 @@ class IconsDownloadProgressView @JvmOverloads constructor(
         val icon = iconQueue.poll()
         if (icon != null) {
             val newView = createProgressView(icon)
-            iconProgressViewContainer.addView(newView)
+            binding.iconProgressViewContainer.addView(newView)
             animateInIcon(newView)
             currentView = newView
         }
@@ -98,7 +100,7 @@ class IconsDownloadProgressView @JvmOverloads constructor(
             .scaleX(ICON_INITIAL_SCALE)
             .scaleY(ICON_INITIAL_SCALE)
             .setDuration(ICON_IN_OUT_DURATION)
-            .withEndAction { iconProgressViewContainer.removeView(view) }
+            .withEndAction { binding.iconProgressViewContainer.removeView(view) }
             .start()
     }
 

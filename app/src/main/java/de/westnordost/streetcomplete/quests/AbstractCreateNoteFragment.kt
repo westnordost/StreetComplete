@@ -11,10 +11,11 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.FormLeaveNoteBinding
+import de.westnordost.streetcomplete.databinding.QuestButtonpanelDoneCancelBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.note_discussion.AttachPhotoFragment
 import de.westnordost.streetcomplete.util.TextChangedWatcher
-import kotlinx.android.synthetic.main.form_leave_note.*
-import kotlinx.android.synthetic.main.quest_buttonpanel_done_cancel.*
 
 /** Abstract base class for a bottom sheet that lets the user create a note */
 abstract class AbstractCreateNoteFragment : AbstractBottomSheetFragment() {
@@ -22,7 +23,10 @@ abstract class AbstractCreateNoteFragment : AbstractBottomSheetFragment() {
     private val attachPhotoFragment: AttachPhotoFragment?
         get() = childFragmentManager.findFragmentById(R.id.attachPhotoFragment) as AttachPhotoFragment
 
-    private val noteText get() = noteInput?.text?.toString().orEmpty().trim()
+    private val formLeaveNoteBinding by viewBinding(FormLeaveNoteBinding::bind)
+    private val questButtonpanelDoneCancelBinding by viewBinding(QuestButtonpanelDoneCancelBinding::bind)
+
+    private val noteText get() = formLeaveNoteBinding.noteInput?.text?.toString().orEmpty().trim()
 
     protected abstract val layoutResId: Int
 
@@ -52,10 +56,10 @@ abstract class AbstractCreateNoteFragment : AbstractBottomSheetFragment() {
             childFragmentManager.commit { add<AttachPhotoFragment>(R.id.attachPhotoFragment) }
         }
 
-        noteInput.addTextChangedListener(TextChangedWatcher { updateDoneButtonEnablement() })
+        formLeaveNoteBinding.noteInput.addTextChangedListener(TextChangedWatcher { updateDoneButtonEnablement() })
 
-        cancelButton.setOnClickListener { activity?.onBackPressed() }
-        doneButton.setOnClickListener { onClickOk() }
+        questButtonpanelDoneCancelBinding.cancelButton.setOnClickListener { activity?.onBackPressed() }
+        questButtonpanelDoneCancelBinding.doneButton.setOnClickListener { onClickOk() }
 
         updateDoneButtonEnablement()
     }
@@ -72,7 +76,7 @@ abstract class AbstractCreateNoteFragment : AbstractBottomSheetFragment() {
         noteText.isNotEmpty() || attachPhotoFragment?.imagePaths?.isNotEmpty() == true
 
     private fun updateDoneButtonEnablement() {
-        doneButton.isEnabled = !noteText.isEmpty()
+        questButtonpanelDoneCancelBinding.doneButton.isEnabled = !noteText.isEmpty()
     }
 
     protected abstract fun onComposedNote(text: String, imagePaths: List<String>)

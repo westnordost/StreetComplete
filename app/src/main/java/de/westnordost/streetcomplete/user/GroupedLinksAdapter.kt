@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.user.achievements.Link
 import de.westnordost.streetcomplete.data.user.achievements.LinkCategory
-import kotlinx.android.synthetic.main.card_link_item.view.*
-import kotlinx.android.synthetic.main.row_link_category_item.view.*
+import de.westnordost.streetcomplete.databinding.RowLinkCategoryItemBinding
+import de.westnordost.streetcomplete.databinding.RowLinkItemBinding
 
 /** Adapter for a list of links, grouped by category */
 class GroupedLinksAdapter(links: List<Link>, private val onClickLink: (url: String) -> Unit)
@@ -37,8 +37,8 @@ class GroupedLinksAdapter(links: List<Link>, private val onClickLink: (url: Stri
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when(viewType) {
-            CATEGORY -> CategoryViewHolder(inflater.inflate(R.layout.row_link_category_item, parent, false))
-            LINK -> LinkViewHolder(inflater.inflate(R.layout.card_link_item, parent, false))
+            CATEGORY -> CategoryViewHolder(RowLinkCategoryItemBinding.inflate(inflater, parent, false))
+            LINK -> LinkViewHolder(RowLinkItemBinding.inflate(inflater, parent, false))
             else -> throw IllegalStateException("Unexpected viewType $viewType")
         }
     }
@@ -50,32 +50,32 @@ class GroupedLinksAdapter(links: List<Link>, private val onClickLink: (url: Stri
         }
     }
 
-    inner class LinkViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class LinkViewHolder(val binding: RowLinkItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(with: Link) {
             if (with.icon != null) {
-                itemView.linkIconImageView.setImageResource(with.icon)
+                binding.linkIconImageView.setImageResource(with.icon)
             } else {
-                itemView.linkIconImageView.setImageDrawable(null)
+                binding.linkIconImageView.setImageDrawable(null)
             }
-            itemView.linkTitleTextView.text = with.title
+            binding.linkTitleTextView.text = with.title
             if (with.description != null) {
-                itemView.linkDescriptionTextView.setText(with.description)
+                binding.linkDescriptionTextView.setText(with.description)
             } else {
-                itemView.linkDescriptionTextView.text = ""
+                binding.linkDescriptionTextView.text = ""
             }
-            itemView.setOnClickListener { onClickLink(with.url) }
+            binding.root.setOnClickListener { onClickLink(with.url) }
         }
     }
 
-    inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CategoryViewHolder(val binding: RowLinkCategoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(with: LinkCategory) {
-            itemView.linkCategoryTitleTextView.setText(with.title)
+            binding.linkCategoryTitleTextView.setText(with.title)
             val description = with.description
-            itemView.linkCategoryDescriptionTextView.isGone = description == null
+            binding.linkCategoryDescriptionTextView.isGone = description == null
             if (description != null) {
-                itemView.linkCategoryDescriptionTextView.setText(description)
+                binding.linkCategoryDescriptionTextView.setText(description)
             } else {
-                itemView.linkCategoryDescriptionTextView.text = ""
+                binding.linkCategoryDescriptionTextView.text = ""
             }
         }
     }

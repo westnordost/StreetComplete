@@ -4,18 +4,21 @@ import android.os.Bundle
 import android.view.View
 
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.FragmentQuestAnswerBinding
 import de.westnordost.streetcomplete.ktx.popIn
 import de.westnordost.streetcomplete.ktx.popOut
 import de.westnordost.streetcomplete.ktx.toast
-import kotlinx.android.synthetic.main.fragment_quest_answer.*
+import de.westnordost.streetcomplete.ktx.viewBinding
 
 /** Abstract base class for dialogs in which the user answers a quest with a form he has to fill
  * out  */
 abstract class AbstractQuestFormAnswerFragment<T> : AbstractQuestAnswerFragment<T>() {
 
+    private val binding by viewBinding(FragmentQuestAnswerBinding::bind)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        okButton.setOnClickListener {
+        binding.okButton.setOnClickListener {
             if (!isFormComplete()) {
                 activity?.toast(R.string.no_changes)
             } else {
@@ -26,9 +29,9 @@ abstract class AbstractQuestFormAnswerFragment<T> : AbstractQuestAnswerFragment<
 
     protected fun checkIsFormComplete() {
         if (isFormComplete()) {
-            okButton.popIn()
+            binding.okButton.popIn()
         } else {
-            okButton.popOut()
+            binding.okButton.popOut()
         }
     }
 

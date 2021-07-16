@@ -7,9 +7,10 @@ import android.view.View
 import androidx.preference.PreferenceManager
 
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.QuestGenericListBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.view.image_select.DisplayItem
 import de.westnordost.streetcomplete.view.image_select.ImageSelectAdapter
-import kotlinx.android.synthetic.main.quest_generic_list.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -28,6 +29,8 @@ abstract class AImageListQuestAnswerFragment<I,T> : AbstractQuestFormAnswerFragm
     override val defaultExpanded = false
 
     protected lateinit var imageSelector: ImageSelectAdapter<I>
+
+    private val binding by viewBinding(QuestGenericListBinding::bind)
 
     private lateinit var favs: LastPickedValuesStore<I>
 
@@ -53,10 +56,10 @@ abstract class AImageListQuestAnswerFragment<I,T> : AbstractQuestFormAnswerFragm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list.layoutManager = GridLayoutManager(activity, itemsPerRow)
-        list.isNestedScrollingEnabled = false
+        binding.list.layoutManager = GridLayoutManager(activity, itemsPerRow)
+        binding.list.isNestedScrollingEnabled = false
 
-        selectHintLabel.setText(if (maxSelectableItems == 1) R.string.quest_roofShape_select_one else R.string.quest_select_hint)
+        binding.selectHintLabel.setText(if (maxSelectableItems == 1) R.string.quest_roofShape_select_one else R.string.quest_select_hint)
 
         imageSelector.listeners.add(object : ImageSelectAdapter.OnItemSelectionListener {
             override fun onIndexSelected(index: Int) {
@@ -68,14 +71,14 @@ abstract class AImageListQuestAnswerFragment<I,T> : AbstractQuestFormAnswerFragm
             }
         })
 
-        showMoreButton.visibility = View.GONE
+        binding.showMoreButton.visibility = View.GONE
 
         imageSelector.items = moveFavouritesToFront(items)
         if (savedInstanceState != null) {
             val selectedIndices = savedInstanceState.getIntegerArrayList(SELECTED_INDICES)!!
             imageSelector.select(selectedIndices)
         }
-        list.adapter = imageSelector
+        binding.list.adapter = imageSelector
     }
 
     override fun onClickOk() {

@@ -12,7 +12,7 @@ import android.provider.Settings
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 import de.westnordost.streetcomplete.R
-import kotlinx.android.synthetic.main.view_icon_progress.view.*
+import de.westnordost.streetcomplete.databinding.ViewIconProgressBinding
 
 /** Shows an icon, surrounded by a circular progress bar and a finished-checkmark */
 class IconProgressView @JvmOverloads constructor(
@@ -23,10 +23,11 @@ class IconProgressView @JvmOverloads constructor(
 
     private val mainHandler = Handler(Looper.getMainLooper())
     private var wobbleAnimator: Animator? = null
+    private val binding : ViewIconProgressBinding
 
     var icon: Drawable?
-        set(value) { iconView.setImageDrawable(value) }
-        get() = iconView.drawable
+        set(value) { binding.iconView.setImageDrawable(value) }
+        get() = binding.iconView.drawable
 
 
     private val animatorDurationScale: Float get() =
@@ -39,10 +40,10 @@ class IconProgressView @JvmOverloads constructor(
 
     fun showProgressAnimation() {
         wobbleAnimator = AnimatorInflater.loadAnimator(context, R.animator.progress_wobble).apply {
-            setTarget(iconView)
+            setTarget(binding.iconView)
             start()
         }
-        progressView.animate()
+        binding.progressView.animate()
             .alpha(1f)
             .setDuration(300)
             .start()
@@ -50,17 +51,17 @@ class IconProgressView @JvmOverloads constructor(
 
     fun showFinishedAnimation(onFinished: () -> Unit) {
         wobbleAnimator?.cancel()
-        progressView.animate()
+        binding.progressView.animate()
             .alpha(0f)
             .setDuration(300)
             .start()
-        checkmarkView.animate()
+        binding.checkmarkView.animate()
             .setDuration(300)
             .alpha(1f)
             .start()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            (checkmarkView.drawable as? AnimatedVectorDrawable)?.start()
+            (binding.checkmarkView.drawable as? AnimatedVectorDrawable)?.start()
         }
 
         val hardcodedCheckmarkAnimationDuration = (animatorDurationScale * 650).toLong()
@@ -68,6 +69,7 @@ class IconProgressView @JvmOverloads constructor(
     }
 
     init {
-        inflate(context, R.layout.view_icon_progress, this)
+        val view = inflate(context, R.layout.view_icon_progress, this)
+        binding = ViewIconProgressBinding.bind(view)
     }
 }

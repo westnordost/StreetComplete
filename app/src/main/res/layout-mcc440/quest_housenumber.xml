@@ -1,105 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/houseAndBlockNumberContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/background_traffic_blue_corners"
-        android:padding="8dp"
-        android:showDividers="middle|beginning|end"
-        android:orientation="horizontal"
-        android:layoutDirection="ltr"
-        android:gravity="center"
-        >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/blockNumberInput"
+        <LinearLayout
+            android:id="@+id/houseAndBlockNumberContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            tools:text="4"
-            android:digits="0123456789"
-            style="@style/BlocknumberEditText"
-            android:minWidth="54dp"
-            />
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/background_traffic_blue_corners"
+            android:gravity="center"
+            android:layoutDirection="ltr"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:showDividers="middle|beginning|end">
 
-        <TextView
+            <EditText
+                android:id="@+id/blockNumberInput"
+                style="@style/BlocknumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:digits="0123456789"
+                android:imeOptions="actionDone"
+                android:minWidth="54dp"
+                tools:text="4" />
+
+            <TextView
+                style="@style/BlocknumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="–"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/houseNumberInput"
+                style="@style/BlocknumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:digits="0123456789.,- /"
+                android:imeOptions="actionDone"
+                android:minWidth="54dp"
+                android:textColorHint="#2fff"
+                tools:text="33" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="0dp"
+            android:layout_alignTop="@+id/houseAndBlockNumberContainer"
+            android:layout_alignBottom="@+id/houseAndBlockNumberContainer"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/houseAndBlockNumberContainer"
+            tools:ignore="RtlHardcoded">
+
+            <include layout="@layout/view_plus_minus_control" />
+
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="–"
-            style="@style/BlocknumberEditText"
-            tools:ignore="HardcodedText" />
+            android:layout_below="@+id/houseAndBlockNumberContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:divider="@drawable/space_16dp"
+            android:layoutDirection="ltr"
+            android:orientation="horizontal"
+            android:showDividers="middle">
 
-        <EditText
-            android:id="@+id/houseNumberInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            tools:text="33"
-            android:textColorHint="#2fff"
-            android:digits="0123456789.,- /"
-            style="@style/BlocknumberEditText"
-            android:minWidth="54dp"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_blocknumber" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="–"
+                tools:ignore="HardcodedText" />
 
-    <FrameLayout
-        android:layout_width="56dp"
-        android:layout_height="0dp"
-        android:layout_toRightOf="@+id/houseAndBlockNumberContainer"
-        android:layout_alignTop="@+id/houseAndBlockNumberContainer"
-        android:layout_alignBottom="@+id/houseAndBlockNumberContainer"
-        android:layout_marginLeft="8dp"
-        tools:ignore="RtlHardcoded">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_housenumber" />
 
-        <include layout="@layout/view_plus_minus_control"/>
+        </LinearLayout>
 
-    </FrameLayout>
+        <Button
+            android:id="@+id/toggleKeyboardButton"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            tools:ignore="RtlHardcoded"
+            tools:text="ABC" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/houseAndBlockNumberContainer"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:showDividers="middle"
-        android:divider="@drawable/space_16dp"
-        android:layoutDirection="ltr"
-        android:layout_margin="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_blocknumber"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="–"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_housenumber"/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/toggleKeyboardButton"
-        android:layout_width="64dp"
-        android:layout_height="56dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        tools:text="ABC"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        tools:ignore="RtlHardcoded" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</merge>

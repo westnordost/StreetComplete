@@ -8,19 +8,24 @@ import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPolylinesGeometry
+import de.westnordost.streetcomplete.databinding.QuestLanesSelectTypeBinding
+import de.westnordost.streetcomplete.databinding.QuestStreetLanesPuzzleBinding
+import de.westnordost.streetcomplete.databinding.ViewLittleCompassBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.AbstractQuestFormAnswerFragment
 import de.westnordost.streetcomplete.quests.OtherAnswer
 import de.westnordost.streetcomplete.quests.StreetSideRotater
 import de.westnordost.streetcomplete.quests.lanes.LanesType.*
 import de.westnordost.streetcomplete.view.dialogs.ValuePickerDialog
-import kotlinx.android.synthetic.main.quest_lanes_select_type.view.*
-import kotlinx.android.synthetic.main.quest_street_lanes_puzzle.view.*
-import kotlinx.android.synthetic.main.view_little_compass.view.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 class AddLanesForm : AbstractQuestFormAnswerFragment<LanesAnswer>() {
+
+    private val questLanesSelectBinding by viewBinding(QuestLanesSelectTypeBinding::bind)
+    private val questStreetLanesPuzzleBinding by viewBinding(QuestStreetLanesPuzzleBinding::bind)
+    private val viewLittleCompassBinding by viewBinding(ViewLittleCompassBinding::bind)
 
     private var selectedLanesType: LanesType? = null
     private var leftSide: Int = 0
@@ -120,7 +125,7 @@ class AddLanesForm : AbstractQuestFormAnswerFragment<LanesAnswer>() {
     private fun setSelectLanesTypeLayout() {
         val view = setContentView(R.layout.quest_lanes_select_type)
 
-        val unmarkedLanesButton = view.unmarkedLanesButton
+        val unmarkedLanesButton = questLanesSelectBinding.unmarkedLanesButton
 
         unmarkedLanesButton.isSelected = selectedLanesType == UNMARKED
 
@@ -130,15 +135,15 @@ class AddLanesForm : AbstractQuestFormAnswerFragment<LanesAnswer>() {
             selectedLanesType = if (wasSelected) null else UNMARKED
             checkIsFormComplete()
         }
-        view.markedLanesButton.setOnClickListener {
+        questLanesSelectBinding.markedLanesButton.setOnClickListener {
             selectedLanesType = MARKED
             unmarkedLanesButton.isSelected = false
             checkIsFormComplete()
             askLanesAndSwitchToStreetSideLayout()
         }
-        view.markedLanesOddButton.isGone = isOneway
+        questLanesSelectBinding.markedLanesOddButton.isGone = isOneway
 
-        view.markedLanesOddButton.setOnClickListener {
+        questLanesSelectBinding.markedLanesOddButton.setOnClickListener {
             selectedLanesType = MARKED_SIDES
             unmarkedLanesButton.isSelected = false
             setStreetSideLayout()
@@ -165,36 +170,37 @@ class AddLanesForm : AbstractQuestFormAnswerFragment<LanesAnswer>() {
 
         val view = setContentView(R.layout.quest_street_lanes_puzzle)
 
-        puzzleView = view.puzzleView
-        lifecycle.addObserver(view.puzzleView)
+        puzzleView = questStreetLanesPuzzleBinding.puzzleView
+        lifecycle.addObserver(questStreetLanesPuzzleBinding.puzzleView)
 
         when(selectedLanesType) {
             MARKED -> {
-                view.puzzleView.onClickListener = this::selectTotalNumberOfLanes
-                view.puzzleView.onClickSideListener = null
+                questStreetLanesPuzzleBinding.puzzleView.onClickListener = this::selectTotalNumberOfLanes
+                questStreetLanesPuzzleBinding.puzzleView.onClickSideListener = null
             }
             MARKED_SIDES -> {
-                view.puzzleView.onClickListener = null
-                view.puzzleView.onClickSideListener = this::selectNumberOfLanesOnOneSide
+                questStreetLanesPuzzleBinding.puzzleView.onClickListener = null
+                questStreetLanesPuzzleBinding.puzzleView.onClickSideListener = this::selectNumberOfLanesOnOneSide
             }
         }
-        view.puzzleView.isShowingLaneMarkings = selectedLanesType in listOf(MARKED, MARKED_SIDES)
-        view.puzzleView.isShowingBothSides = !isOneway
-        view.puzzleView.isForwardTraffic = if (isOneway) isForwardOneway else !isLeftHandTraffic
+        questStreetLanesPuzzleBinding.puzzleView.isShowingLaneMarkings = selectedLanesType in listOf(MARKED, MARKED_SIDES)
+        questStreetLanesPuzzleBinding.puzzleView.isShowingBothSides = !isOneway
+        questStreetLanesPuzzleBinding.puzzleView.isForwardTraffic = if (isOneway) isForwardOneway else !isLeftHandTraffic
 
         val shoulderLine = countryInfo.shoulderLine
 
-        view.puzzleView.shoulderLineColor =
+        questStreetLanesPuzzleBinding.puzzleView.shoulderLineColor =
             if(shoulderLine.contains("yellow")) Color.YELLOW else Color.WHITE
-        view.puzzleView.shoulderLineStyle =
+        questStreetLanesPuzzleBinding.puzzleView.shoulderLineStyle =
             if(shoulderLine.contains("dashes"))
                 if (shoulderLine.contains("short")) LineStyle.SHORT_DASHES else LineStyle.DASHES
             else
                 LineStyle.CONTINUOUS
 
-            view.puzzleView.centerLineColor = if(countryInfo.centerLine.contains("yellow")) Color.YELLOW else Color.WHITE
+        questStreetLanesPuzzleBinding.puzzleView.centerLineColor = if(countryInfo.centerLine.contains("yellow")) Color.YELLOW else Color.WHITE
 
-        streetSideRotater = StreetSideRotater(view.puzzleViewRotateContainer, view.compassNeedleView, elementGeometry as ElementPolylinesGeometry)
+        streetSideRotater = StreetSideRotater(questStreetLanesPuzzleBinding.puzzleViewRotateContainer,
+            viewLittleCompassBinding.compassNeedleView, elementGeometry as ElementPolylinesGeometry)
         streetSideRotater?.onMapOrientation(lastRotation, lastTilt)
 
         updatePuzzleView()

@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar"
+        <include android:id="@+id/toolbarLayout"
+            layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

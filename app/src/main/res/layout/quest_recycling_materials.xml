@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/quest_recycling_materials_note"
-        android:layout_marginBottom="@dimen/quest_form_vertical_margin"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <include layout="@layout/quest_generic_list"/>
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/quest_form_vertical_margin"
+            android:text="@string/quest_recycling_materials_note" />
+
+        <include layout="@layout/quest_generic_list" />
+    </LinearLayout>
+</merge>

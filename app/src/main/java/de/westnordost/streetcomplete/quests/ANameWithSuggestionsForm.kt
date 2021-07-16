@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.QuestNameSuggestionBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.util.TextChangedWatcher
-import kotlinx.android.synthetic.main.quest_name_suggestion.*
 
 abstract class ANameWithSuggestionsForm<T> : AbstractQuestFormAnswerFragment<T>() {
 
     override val contentLayoutResId = R.layout.quest_name_suggestion
 
-    protected val name get() = nameInput?.text?.toString().orEmpty().trim()
+    private val binding by viewBinding(QuestNameSuggestionBinding::bind)
+
+    protected val name get() = binding.nameInput?.text?.toString().orEmpty().trim()
 
     abstract val suggestions: List<String>?
 
@@ -19,13 +22,13 @@ abstract class ANameWithSuggestionsForm<T> : AbstractQuestFormAnswerFragment<T>(
         super.onViewCreated(view, savedInstanceState)
 
         suggestions?.let {
-            nameInput.setAdapter(ArrayAdapter(
+            binding.nameInput.setAdapter(ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_dropdown_item_1line, it
             ))
         }
 
-        nameInput.addTextChangedListener(TextChangedWatcher { checkIsFormComplete() })
+        binding.nameInput.addTextChangedListener(TextChangedWatcher { checkIsFormComplete() })
     }
 
     override fun isFormComplete() = name.isNotEmpty()

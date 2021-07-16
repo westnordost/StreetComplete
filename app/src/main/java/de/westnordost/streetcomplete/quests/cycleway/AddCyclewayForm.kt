@@ -8,16 +8,19 @@ import androidx.appcompat.app.AlertDialog
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPolylinesGeometry
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
+import de.westnordost.streetcomplete.databinding.QuestStreetSidePuzzleBinding
+import de.westnordost.streetcomplete.databinding.ViewLittleCompassBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.AbstractQuestFormAnswerFragment
 import de.westnordost.streetcomplete.quests.OtherAnswer
 import de.westnordost.streetcomplete.quests.StreetSideRotater
 import de.westnordost.streetcomplete.view.ResImage
 import de.westnordost.streetcomplete.view.image_select.ImageListPickerDialog
-import kotlinx.android.synthetic.main.quest_street_side_puzzle.*
-import kotlinx.android.synthetic.main.view_little_compass.*
 
 class AddCyclewayForm : AbstractQuestFormAnswerFragment<CyclewayAnswer>() {
 
+    private val binding by viewBinding(ViewLittleCompassBinding::bind)
+    private val questStreetSideBinding by viewBinding(QuestStreetSidePuzzleBinding::bind)
     override val contentLayoutResId = R.layout.quest_street_side_puzzle
     override val contentPadding = false
 
@@ -78,26 +81,26 @@ class AddCyclewayForm : AbstractQuestFormAnswerFragment<CyclewayAnswer>() {
             onLoadInstanceState(savedInstanceState)
         }
 
-        puzzleView.onClickSideListener = { isRight -> showCyclewaySelectionDialog(isRight) }
+        questStreetSideBinding.puzzleView.onClickSideListener = { isRight -> showCyclewaySelectionDialog(isRight) }
 
-        streetSideRotater = StreetSideRotater(puzzleView, compassNeedleView, elementGeometry as ElementPolylinesGeometry)
+        streetSideRotater = StreetSideRotater(questStreetSideBinding.puzzleView, binding.compassNeedleView, elementGeometry as ElementPolylinesGeometry)
 
         if (!isDefiningBothSides) {
-            if (isLeftHandTraffic) puzzleView.showOnlyLeftSide()
-            else                   puzzleView.showOnlyRightSide()
+            if (isLeftHandTraffic) questStreetSideBinding.puzzleView.showOnlyLeftSide()
+            else                   questStreetSideBinding.puzzleView.showOnlyRightSide()
         }
 
         val defaultResId =
             if (isLeftHandTraffic) R.drawable.ic_cycleway_unknown_l
             else                   R.drawable.ic_cycleway_unknown
 
-        puzzleView.setLeftSideImage(ResImage(leftSide?.getIconResId(isLeftHandTraffic) ?: defaultResId))
-        puzzleView.setRightSideImage(ResImage(rightSide?.getIconResId(isLeftHandTraffic) ?: defaultResId))
-        puzzleView.setLeftSideText(leftSide?.getTitleResId()?.let { resources.getString(it) })
-        puzzleView.setRightSideText(rightSide?.getTitleResId()?.let { resources.getString(it) })
+        questStreetSideBinding.puzzleView.setLeftSideImage(ResImage(leftSide?.getIconResId(isLeftHandTraffic) ?: defaultResId))
+        questStreetSideBinding.puzzleView.setRightSideImage(ResImage(rightSide?.getIconResId(isLeftHandTraffic) ?: defaultResId))
+        questStreetSideBinding.puzzleView.setLeftSideText(leftSide?.getTitleResId()?.let { resources.getString(it) })
+        questStreetSideBinding.puzzleView.setRightSideText(rightSide?.getTitleResId()?.let { resources.getString(it) })
         if ((leftSide == null || rightSide == null) && !HAS_SHOWN_TAP_HINT) {
-            if (leftSide == null) puzzleView.showLeftSideTapHint()
-            if (rightSide == null) puzzleView.showRightSideTapHint()
+            if (leftSide == null) questStreetSideBinding.puzzleView.showLeftSideTapHint()
+            if (rightSide == null) questStreetSideBinding.puzzleView.showRightSideTapHint()
             HAS_SHOWN_TAP_HINT = true
         }
 
@@ -138,7 +141,7 @@ class AddCyclewayForm : AbstractQuestFormAnswerFragment<CyclewayAnswer>() {
 
     private fun setAsResurvey(resurvey: Boolean) {
         isDisplayingPreviousCycleway = resurvey
-        puzzleView.isEnabled = !resurvey
+        questStreetSideBinding.puzzleView.isEnabled = !resurvey
         if (resurvey) {
             setButtonsView(R.layout.quest_buttonpanel_yes_no)
             requireView().findViewById<View>(R.id.noButton).setOnClickListener {
@@ -213,12 +216,12 @@ class AddCyclewayForm : AbstractQuestFormAnswerFragment<CyclewayAnswer>() {
             val titleResId = resources.getString(cycleway.getTitleResId())
 
             if (isRight) {
-                puzzleView.replaceRightSideImage(ResImage(iconResId))
-                puzzleView.setRightSideText(titleResId)
+                questStreetSideBinding.puzzleView.replaceRightSideImage(ResImage(iconResId))
+                questStreetSideBinding.puzzleView.setRightSideText(titleResId)
                 rightSide = cycleway
             } else {
-                puzzleView.replaceLeftSideImage(ResImage(iconResId))
-                puzzleView.setLeftSideText(titleResId)
+                questStreetSideBinding.puzzleView.replaceLeftSideImage(ResImage(iconResId))
+                questStreetSideBinding.puzzleView.setLeftSideText(titleResId)
                 leftSide = cycleway
             }
             checkIsFormComplete()
@@ -238,7 +241,7 @@ class AddCyclewayForm : AbstractQuestFormAnswerFragment<CyclewayAnswer>() {
 
     private fun showBothSides() {
         isDefiningBothSides = true
-        puzzleView.showBothSides()
+        questStreetSideBinding.puzzleView.showBothSides()
         checkIsFormComplete()
     }
 

@@ -12,10 +12,11 @@ import androidx.preference.PreferenceManager
 import javax.inject.Inject
 
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.FragmentQuestAnswerBinding
+import de.westnordost.streetcomplete.databinding.QuestGenericListBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.view.image_select.GroupableDisplayItem
 import de.westnordost.streetcomplete.view.image_select.GroupedImageSelectAdapter
-import kotlinx.android.synthetic.main.fragment_quest_answer.*
-import kotlinx.android.synthetic.main.quest_generic_list.*
 import java.util.LinkedList
 import kotlin.math.max
 
@@ -28,6 +29,9 @@ abstract class AGroupedImageListQuestAnswerFragment<I,T> : AbstractQuestFormAnsw
 
     override val contentLayoutResId = R.layout.quest_generic_list
     override val defaultExpanded = false
+
+    private val questAnswersBinding by viewBinding(FragmentQuestAnswerBinding::bind)
+    private val questListBinding by viewBinding(QuestGenericListBinding::bind)
 
     protected lateinit var imageSelector: GroupedImageSelectAdapter<I>
 
@@ -53,15 +57,15 @@ abstract class AGroupedImageListQuestAnswerFragment<I,T> : AbstractQuestFormAnsw
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list.layoutManager = imageSelector.gridLayoutManager
-        list.isNestedScrollingEnabled = false
+        questListBinding.list.layoutManager = imageSelector.gridLayoutManager
+        questListBinding.list.isNestedScrollingEnabled = false
 
-        showMoreButton.setOnClickListener {
+        questListBinding.showMoreButton.setOnClickListener {
             imageSelector.items = allItems
-            showMoreButton.visibility = View.GONE
+            questListBinding.showMoreButton.visibility = View.GONE
         }
 
-        selectHintLabel.setText(R.string.quest_select_hint_most_specific)
+        questListBinding.selectHintLabel.setText(R.string.quest_select_hint_most_specific)
 
         imageSelector.listeners.add { checkIsFormComplete() }
         imageSelector.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -73,7 +77,7 @@ abstract class AGroupedImageListQuestAnswerFragment<I,T> : AbstractQuestFormAnsw
         checkIsFormComplete()
 
         imageSelector.items = getInitialItems()
-        list.adapter = imageSelector
+        questListBinding.list.adapter = imageSelector
     }
 
     private fun scrollTo(index: Int) {
@@ -82,10 +86,10 @@ abstract class AGroupedImageListQuestAnswerFragment<I,T> : AbstractQuestFormAnsw
             val itemPos = IntArray(2)
             item.getLocationInWindow(itemPos)
             val scrollViewPos = IntArray(2)
-            scrollView.getLocationInWindow(scrollViewPos)
+            questAnswersBinding.scrollView.getLocationInWindow(scrollViewPos)
 
-            scrollView.postDelayed(250) {
-                scrollView.smoothScrollTo(0, itemPos[1] - scrollViewPos[1])
+            questAnswersBinding.scrollView.postDelayed(250) {
+                questAnswersBinding.scrollView.smoothScrollTo(0, itemPos[1] - scrollViewPos[1])
             }
         }
     }

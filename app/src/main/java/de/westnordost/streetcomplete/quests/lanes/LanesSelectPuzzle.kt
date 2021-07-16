@@ -14,10 +14,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.LanesSelectPuzzleBinding
 import de.westnordost.streetcomplete.ktx.getBitmapDrawable
 import de.westnordost.streetcomplete.ktx.showTapHint
 import de.westnordost.streetcomplete.quests.lanes.LineStyle.*
-import kotlinx.android.synthetic.main.lanes_select_puzzle.view.*
 import kotlin.math.max
 import kotlin.random.Random
 
@@ -30,20 +30,21 @@ class LanesSelectPuzzle @JvmOverloads constructor(
 
     private val animator = TimeAnimator()
 
+    private val binding : LanesSelectPuzzleBinding
     private val questionMark: Drawable = context.resources.getDrawable(R.drawable.ic_lanes_unknown)
 
     var onClickSideListener: ((isRight: Boolean) -> Unit)? = null
         set(value) {
             field = value
             if (value == null) {
-                leftSideClickArea.setOnClickListener(null)
-                rightSideClickArea.setOnClickListener(null)
-                leftSideClickArea.isClickable = false
-                rightSideClickArea.isClickable = false
+                binding.leftSideClickArea.setOnClickListener(null)
+                binding.rightSideClickArea.setOnClickListener(null)
+                binding.leftSideClickArea.isClickable = false
+                binding.rightSideClickArea.isClickable = false
             } else {
                 isClickable = false
-                leftSideClickArea.setOnClickListener { value.invoke(false) }
-                rightSideClickArea.setOnClickListener { value.invoke(true) }
+                binding.leftSideClickArea.setOnClickListener { value.invoke(false) }
+                binding.rightSideClickArea.setOnClickListener { value.invoke(true) }
             }
         }
 
@@ -54,8 +55,8 @@ class LanesSelectPuzzle @JvmOverloads constructor(
                 setOnClickListener(null)
                 isClickable = false
             } else {
-                leftSideClickArea.isClickable = false
-                rightSideClickArea.isClickable = false
+                binding.leftSideClickArea.isClickable = false
+                binding.rightSideClickArea.isClickable = false
                 setOnClickListener { value.invoke() }
             }
         }
@@ -167,7 +168,8 @@ class LanesSelectPuzzle @JvmOverloads constructor(
 
         carBitmaps = CAR_RES_IDS.map { resources.getBitmapDrawable(it).bitmap }
 
-        LayoutInflater.from(context).inflate(R.layout.lanes_select_puzzle, this, true)
+        val view = LayoutInflater.from(context).inflate(R.layout.lanes_select_puzzle, this, true)
+        binding = LanesSelectPuzzleBinding.bind(view)
 
         animator.setTimeListener { _, _, deltaTime ->
             moveCars(deltaTime)
@@ -197,8 +199,8 @@ class LanesSelectPuzzle @JvmOverloads constructor(
         updateCarsOnLanes(right, carsOnLanesRight, isForwardTraffic)
 
         if ((laneCountLeft <= 0 || laneCountRight <= 0) && !HAS_SHOWN_TAP_HINT) {
-            if (laneCountLeft <= 0) leftSideClickArea.showTapHint(300)
-            if (laneCountRight <= 0) rightSideClickArea.showTapHint(1200)
+            if (laneCountLeft <= 0) binding.leftSideClickArea.showTapHint(300)
+            if (laneCountRight <= 0) binding.rightSideClickArea.showTapHint(1200)
             HAS_SHOWN_TAP_HINT = true
         }
 
@@ -306,11 +308,11 @@ class LanesSelectPuzzle @JvmOverloads constructor(
         val laneWidth = laneWidth
         if (laneWidth == 0f) return
 
-        leftSideClickArea.isGone = isShowingOnlyRightSide
-        leftSideClickArea.updateLayoutParams {
+        binding.leftSideClickArea.isGone = isShowingOnlyRightSide
+        binding.leftSideClickArea.updateLayoutParams {
             width = (leftLanesEnd * laneWidth).toInt()
         }
-        rightSideClickArea.updateLayoutParams {
+        binding.rightSideClickArea.updateLayoutParams {
             width = w - (rightLanesStart * laneWidth).toInt()
         }
 

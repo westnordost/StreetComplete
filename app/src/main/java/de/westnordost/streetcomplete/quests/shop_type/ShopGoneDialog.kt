@@ -15,9 +15,9 @@ import de.westnordost.osmfeatures.StringUtils
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
+import de.westnordost.streetcomplete.databinding.DialogShopGoneBinding
 import de.westnordost.streetcomplete.ktx.isSomeKindOfShop
 import de.westnordost.streetcomplete.ktx.toTypedArray
-import kotlinx.android.synthetic.main.view_shop_type.view.*
 
 class ShopGoneDialog(
     context: Context,
@@ -34,14 +34,16 @@ class ShopGoneDialog(
     private val leaveNoteRadioButton: RadioButton
     private val radioButtons: List<RadioButton>
     private var selectedRadioButtonId: Int = 0
+    private val binding: DialogShopGoneBinding
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_shop_gone, null)
+        binding = DialogShopGoneBinding.bind(view)
 
-        presetsEditText = view.presetsEditText
-        vacantRadioButton = view.vacantRadioButton
-        replaceRadioButton = view.replaceRadioButton
-        leaveNoteRadioButton = view.leaveNoteRadioButton
+        presetsEditText = binding.viewShopTypeLayout.presetsEditText
+        vacantRadioButton = binding.viewShopTypeLayout.vacantRadioButton
+        replaceRadioButton = binding.viewShopTypeLayout.replaceRadioButton
+        leaveNoteRadioButton = binding.viewShopTypeLayout.leaveNoteRadioButton
         radioButtons = listOf(vacantRadioButton, replaceRadioButton, leaveNoteRadioButton)
         for (radioButton in radioButtons) {
             radioButton.setOnClickListener { selectRadioButton(it) }

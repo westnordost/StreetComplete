@@ -20,17 +20,19 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.quest.*
+import de.westnordost.streetcomplete.databinding.FragmentShowQuestFormsBinding
+import de.westnordost.streetcomplete.databinding.RowQuestDisplayBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.AbstractQuestAnswerFragment
 import de.westnordost.streetcomplete.view.ListAdapter
-import kotlinx.android.synthetic.main.fragment_show_quest_forms.*
-import kotlinx.android.synthetic.main.row_quest_display.view.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 /** activity only used in debug, to show all the different forms for the different quests. */
 class ShowQuestFormsActivity : AppCompatActivity(), AbstractQuestAnswerFragment.Listener {
 
     @Inject internal lateinit var questTypeRegistry: QuestTypeRegistry
     @Inject internal lateinit var prefs: SharedPreferences
+
+    private val binding by viewBinding(FragmentShowQuestFormsBinding::inflate)
 
     private val showQuestFormAdapter: ShowQuestFormAdapter = ShowQuestFormAdapter()
 
@@ -44,13 +46,13 @@ class ShowQuestFormsActivity : AppCompatActivity(), AbstractQuestAnswerFragment.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_show_quest_forms)
-        toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_close_white_24dp)
-        toolbar.setNavigationOnClickListener { onBackPressed() }
-        toolbar.title = "Show Quest Forms"
+        binding.toolbarLayout.toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_close_white_24dp)
+        binding.toolbarLayout.toolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbarLayout.toolbar.title = "Show Quest Forms"
 
-        questFormContainer.setOnClickListener { onBackPressed() }
+        binding.questFormContainer.setOnClickListener { onBackPressed() }
 
-        showQuestFormsList.apply {
+        binding.showQuestFormsList.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             layoutManager = LinearLayoutManager(context)
             adapter = showQuestFormAdapter
@@ -67,20 +69,20 @@ class ShowQuestFormsActivity : AppCompatActivity(), AbstractQuestAnswerFragment.
 
     private fun popQuestForm(message: String? = null) {
         message?.let { AlertDialog.Builder(this).setMessage(it).show() }
-        questFormContainer.visibility = View.GONE
+        binding.questFormContainer.visibility = View.GONE
         supportFragmentManager.popBackStack()
         currentQuestType = null
     }
 
     inner class ShowQuestFormAdapter: ListAdapter<QuestType<*>>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListAdapter.ViewHolder<QuestType<*>> =
-            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_quest_display, parent, false))
+            ViewHolder(RowQuestDisplayBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-        private inner class ViewHolder(itemView: View) : ListAdapter.ViewHolder<QuestType<*>>(itemView) {
+        private inner class ViewHolder(val binding: RowQuestDisplayBinding) : ListAdapter.ViewHolder<QuestType<*>>(binding) {
             override fun onBind(with: QuestType<*>) {
-                itemView.questIcon.setImageResource(with.icon)
-                itemView.questTitle.text = genericQuestTitle(itemView, with)
-                itemView.setOnClickListener { onClickQuestType(with) }
+                binding.questIcon.setImageResource(with.icon)
+                binding.questTitle.text = genericQuestTitle(itemView, with)
+                binding.root.setOnClickListener { onClickQuestType(with) }
             }
         }
     }
@@ -121,7 +123,7 @@ class ShowQuestFormsActivity : AppCompatActivity(), AbstractQuestAnswerFragment.
 
         currentQuestType = questType
 
-        questFormContainer.visibility = View.VISIBLE
+        binding.questFormContainer.visibility = View.VISIBLE
         supportFragmentManager.commit {
             replace(R.id.questForm, f)
             addToBackStack(null)

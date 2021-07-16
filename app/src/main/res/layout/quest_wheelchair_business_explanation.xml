@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/descriptionLabel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/quest_wheelchairAccess_limited_description_business"
-    android:labelFor="@+id/nameInput"/>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/descriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/nameInput"
+        android:text="@string/quest_wheelchairAccess_limited_description_business" />
+</merge>

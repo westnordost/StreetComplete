@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge><include layout="@layout/quest_maxheight_us"/></merge>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/quest_maxheight_us" />
+
+</LinearLayout>
+</merge>

@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/dialog_vertical_margin"
-    android:paddingBottom="@dimen/dialog_vertical_margin"
-    android:paddingLeft="@dimen/dialog_horizontal_margin"
-    android:paddingRight="@dimen/dialog_horizontal_margin"
-    android:weightSum="1">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:text="@string/quest_lanes_answer_lanes_description2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.Theme.Dialog"
-        android:layout_marginBottom="8dp"/>
-
-    <NumberPicker
-        android:id="@+id/numberPicker"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dialog_horizontal_margin"
+        android:paddingTop="@dimen/dialog_vertical_margin"
+        android:paddingRight="@dimen/dialog_horizontal_margin"
+        android:paddingBottom="@dimen/dialog_vertical_margin"
+        android:weightSum="1">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/quest_lanes_answer_lanes_description2"
+            android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
+
+        <NumberPicker
+            android:id="@+id/numberPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</merge>

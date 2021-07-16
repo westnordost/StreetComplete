@@ -7,9 +7,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.doOnPreDraw
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.about.AboutActivity
+import de.westnordost.streetcomplete.databinding.DialogMainMenuBinding
 import de.westnordost.streetcomplete.settings.SettingsActivity
 import de.westnordost.streetcomplete.user.UserActivity
-import kotlinx.android.synthetic.main.dialog_main_menu.view.*
 
 /** Shows a dialog containing the main menu items */
 class MainMenuDialog(
@@ -20,47 +20,47 @@ class MainMenuDialog(
     onDisableTeamMode: () -> Unit,
 ) : AlertDialog(context, R.style.Theme_Bubble_Dialog) {
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.dialog_main_menu, null)
+        val binding = DialogMainMenuBinding.bind(LayoutInflater.from(context).inflate(R.layout.dialog_main_menu, null))
 
-        view.profileButton.setOnClickListener {
+        binding.profileButton.setOnClickListener {
             val intent = Intent(context, UserActivity::class.java)
             context.startActivity(intent)
             dismiss()
         }
-        view.enableTeamModeButton.setOnClickListener {
+        binding.enableTeamModeButton.setOnClickListener {
             TeamModeDialog(context, onEnableTeamMode).show()
             dismiss()
         }
-        view.disableTeamModeButton.setOnClickListener {
+        binding.disableTeamModeButton.setOnClickListener {
             onDisableTeamMode()
             dismiss()
         }
-        view.settingsButton.setOnClickListener {
+        binding.settingsButton.setOnClickListener {
             val intent = Intent(context, SettingsActivity::class.java)
             context.startActivity(intent)
             dismiss()
         }
-        view.aboutButton.setOnClickListener {
+        binding.aboutButton.setOnClickListener {
             val intent = Intent(context, AboutActivity::class.java)
             context.startActivity(intent)
             dismiss()
         }
-        view.downloadButton.setOnClickListener {
+        binding.downloadButton.setOnClickListener {
             onClickDownload()
             dismiss()
         }
 
         if (indexInTeam != null) {
-            view.teamModeColorCircle.setIndexInTeam(indexInTeam)
-            view.bigMenuItemsContainer.removeView(view.enableTeamModeButton)
+            binding.teamModeColorCircle.setIndexInTeam(indexInTeam)
+            binding.bigMenuItemsContainer.removeView(binding.enableTeamModeButton)
         } else {
-            view.bigMenuItemsContainer.removeView(view.disableTeamModeButton)
+            binding.bigMenuItemsContainer.removeView(binding.disableTeamModeButton)
         }
 
-        view.doOnPreDraw {
-            view.bigMenuItemsContainer.columnCount = view.width / view.profileButton.width
+        binding.root.doOnPreDraw {
+            binding.bigMenuItemsContainer.columnCount = binding.root.width / binding.profileButton.width
         }
 
-        setView(view)
+        setView(binding.root)
     }
 }

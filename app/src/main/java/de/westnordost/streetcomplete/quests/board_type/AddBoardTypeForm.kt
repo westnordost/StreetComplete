@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.QuestBoardTypeBinding
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.quests.AbstractQuestFormAnswerFragment
 import de.westnordost.streetcomplete.quests.OtherAnswer
 import de.westnordost.streetcomplete.quests.board_type.BoardType.*
-import kotlinx.android.synthetic.main.quest_board_type.*
 
 class AddBoardTypeForm : AbstractQuestFormAnswerFragment<BoardType>() {
 
     override val defaultExpanded = false
+
+    private val binding by viewBinding(QuestBoardTypeBinding::bind)
 
     override val otherAnswers = listOf(
             OtherAnswer(R.string.quest_board_type_map) { confirmOnMap() }
@@ -30,11 +33,11 @@ class AddBoardTypeForm : AbstractQuestFormAnswerFragment<BoardType>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        radioButtonGroup.setOnCheckedChangeListener { _, _ -> checkIsFormComplete() }
+        binding.radioButtonGroup.setOnCheckedChangeListener { _, _ -> checkIsFormComplete() }
     }
 
     override fun onClickOk() {
-        applyAnswer(when (radioButtonGroup.checkedRadioButtonId) {
+        applyAnswer(when (binding.radioButtonGroup.checkedRadioButtonId) {
             R.id.history -> HISTORY
             R.id.geology -> GEOLOGY
             R.id.plants -> PLANTS
@@ -46,5 +49,5 @@ class AddBoardTypeForm : AbstractQuestFormAnswerFragment<BoardType>() {
         })
     }
 
-    override fun isFormComplete() = radioButtonGroup.checkedRadioButtonId != -1
+    override fun isFormComplete() = binding.radioButtonGroup.checkedRadioButtonId != -1
 }

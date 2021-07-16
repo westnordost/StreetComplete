@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AutoCompleteTextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nameInput"
-    android:textSize="32sp"
-    android:completionThreshold="3"
-    tools:text="Sparkasse Mittelholstein"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <AutoCompleteTextView
+        android:id="@+id/nameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:completionThreshold="3"
+        android:textSize="32sp"
+        tools:text="Sparkasse Mittelholstein" />
+</merge>

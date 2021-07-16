@@ -1,7 +1,7 @@
 package de.westnordost.streetcomplete.view
 
 import androidx.recyclerview.widget.RecyclerView
-import android.view.View
+import androidx.viewbinding.ViewBinding
 
 /** Adapter based on a list */
 abstract class ListAdapter<T>(list: List<T> = listOf()) :
@@ -19,7 +19,7 @@ abstract class ListAdapter<T>(list: List<T> = listOf()) :
 
     override fun getItemCount() = list.size
 
-    abstract class ViewHolder<U>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    abstract class ViewHolder<U>(binding : ViewBinding) : RecyclerView.ViewHolder(binding.root) {
         abstract fun onBind(with: U)
     }
 }

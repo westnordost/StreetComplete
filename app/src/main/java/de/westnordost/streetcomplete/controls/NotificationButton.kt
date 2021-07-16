@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import androidx.core.view.isInvisible
 import de.westnordost.streetcomplete.R
-import kotlinx.android.synthetic.main.view_notification_button.view.*
+import de.westnordost.streetcomplete.databinding.ViewNotificationButtonBinding
 
 /** View that shows a notification-button with a little counter at the top right */
 class NotificationButton @JvmOverloads constructor(
@@ -14,15 +14,18 @@ class NotificationButton @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr)  {
 
+    private val binding : ViewNotificationButtonBinding
+
     var notificationsCount: Int = 0
     set(value) {
         field = value
-        textView.text = value.toString()
-        textView.isInvisible = value == 0
+        binding.textView.text = value.toString()
+        binding.textView.isInvisible = value == 0
     }
 
     init {
-        inflate(context, R.layout.view_notification_button, this)
+        val view = inflate(context, R.layout.view_notification_button, this)
+        binding = ViewNotificationButtonBinding.bind(view)
         clipToPadding = false
     }
 }

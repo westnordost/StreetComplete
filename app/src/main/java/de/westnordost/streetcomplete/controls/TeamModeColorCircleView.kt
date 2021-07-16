@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
 import de.westnordost.streetcomplete.R
-import kotlinx.android.synthetic.main.view_team_mode_color_circle.view.*
+import de.westnordost.streetcomplete.databinding.ViewTeamModeColorCircleBinding
 
 class TeamModeColorCircleView @JvmOverloads constructor(
     context: Context,
@@ -14,13 +14,15 @@ class TeamModeColorCircleView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
+    private val binding : ViewTeamModeColorCircleBinding
+
     fun setIndexInTeam(index: Int) {
         val color = context.resources.getColor(colors[index])
         val brightness = getColorBrightness(color)
 
-        teamModeColorCircleBackground.setColorFilter(color)
-        teamModeColorCircleText.text = (index + 'A'.toInt()).toChar().toString()
-        teamModeColorCircleText.setTextColor(if (brightness > 0.7) Color.BLACK else Color.WHITE)
+        binding.teamModeColorCircleBackground.setColorFilter(color)
+        binding.teamModeColorCircleText.text = (index + 'A'.toInt()).toChar().toString()
+        binding.teamModeColorCircleText.setTextColor(if (brightness > 0.7) Color.BLACK else Color.WHITE)
     }
 
     private fun getColorBrightness(@ColorInt color: Int): Float {
@@ -30,7 +32,8 @@ class TeamModeColorCircleView @JvmOverloads constructor(
     }
 
     init {
-        inflate(context, R.layout.view_team_mode_color_circle, this)
+        val view = inflate(context, R.layout.view_team_mode_color_circle, this)
+        binding = ViewTeamModeColorCircleBinding.bind(view)
         setIndexInTeam(0)
     }
 

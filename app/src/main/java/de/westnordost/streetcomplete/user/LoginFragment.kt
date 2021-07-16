@@ -19,10 +19,11 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.OsmApiModule
 import de.westnordost.streetcomplete.data.UnsyncedChangesCountSource
 import de.westnordost.streetcomplete.data.user.UserController
+import de.westnordost.streetcomplete.databinding.FragmentLoginBinding
 import de.westnordost.streetcomplete.ktx.childFragmentManagerOrNull
 import de.westnordost.streetcomplete.ktx.toast
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.settings.OAuthFragment
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.*
 import oauth.signpost.OAuthConsumer
 import javax.inject.Inject
@@ -39,6 +40,8 @@ class LoginFragment : Fragment(R.layout.fragment_login),
 
     override val title: String get() = getString(R.string.user_login)
 
+    private val binding by viewBinding(FragmentLoginBinding::bind)
+
     private val oAuthFragment: OAuthFragment? get() =
         childFragmentManagerOrNull?.findFragmentById(R.id.oauthFragmentContainer) as? OAuthFragment
 
@@ -48,7 +51,7 @@ class LoginFragment : Fragment(R.layout.fragment_login),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginButton.setOnClickListener { pushOAuthFragment() }
+        binding.loginButton.setOnClickListener { pushOAuthFragment() }
 
         val launchAuth = arguments?.getBoolean(ARG_LAUNCH_AUTH, false) ?: false
         if (launchAuth) {
@@ -61,8 +64,8 @@ class LoginFragment : Fragment(R.layout.fragment_login),
 
         lifecycleScope.launch {
             val unsyncedChanges = unsyncedChangesCountSource.getCount()
-            unpublishedQuestsText.text = getString(R.string.unsynced_quests_not_logged_in_description, unsyncedChanges)
-            unpublishedQuestsText.isGone = unsyncedChanges <= 0
+            binding.unpublishedQuestsText.text = getString(R.string.unsynced_quests_not_logged_in_description, unsyncedChanges)
+            binding.unpublishedQuestsText.isGone = unsyncedChanges <= 0
         }
     }
 
@@ -79,17 +82,17 @@ class LoginFragment : Fragment(R.layout.fragment_login),
     /* ------------------------------- OAuthFragment.Listener ----------------------------------- */
 
     override fun onOAuthSuccess(consumer: OAuthConsumer) {
-        loginButton.visibility = View.INVISIBLE
-        loginProgress.visibility = View.VISIBLE
+        binding.loginButton.visibility = View.INVISIBLE
+        binding.loginProgress.visibility = View.VISIBLE
         childFragmentManager.popBackStack("oauth", POP_BACK_STACK_INCLUSIVE)
         lifecycleScope.launch {
             if (hasRequiredPermissions(consumer)) {
                 userController.logIn(consumer)
             } else {
                 context?.toast(R.string.oauth_failed_permissions, Toast.LENGTH_LONG)
-                loginButton.visibility = View.VISIBLE
+                binding.loginButton.visibility = View.VISIBLE
             }
-            loginProgress.visibility = View.INVISIBLE
+            binding.loginProgress.visibility = View.INVISIBLE
         }
     }
 

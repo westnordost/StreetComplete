@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/marker_create_note"/>
-    <include layout="@layout/fragment_quest_answer" />
+    <include android:id="@+id/markerCreateLayout"
+        layout="@layout/marker_create_note"/>
+    <include android:id="@+id/fragmentQuestAnsLayout"
+        layout="@layout/fragment_quest_answer" />
 
 </de.westnordost.streetcomplete.view.SlidingRelativeLayout>

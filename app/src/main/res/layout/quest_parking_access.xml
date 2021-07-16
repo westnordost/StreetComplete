@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioGroup
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/radioButtonGroup" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RadioButton
-        android:id="@+id/yes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_parking_access_yes" />
+    <RadioGroup
+        android:id="@+id/radioButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <RadioButton
-        android:id="@+id/private_access"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_parking_access_private" />
+        <RadioButton
+            android:id="@+id/yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_parking_access_yes" />
 
-    <RadioButton
-        android:id="@+id/customers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/quest_parking_access_customers" />
-</RadioGroup>
+        <RadioButton
+            android:id="@+id/private_access"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_parking_access_private" />
+
+        <RadioButton
+            android:id="@+id/customers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_parking_access_customers" />
+    </RadioGroup>
+</merge>

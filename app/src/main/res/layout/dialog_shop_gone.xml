@@ -6,6 +6,7 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
-    <include layout="@layout/view_shop_type"/>
+    <include android:id="@+id/viewShopTypeLayout"
+        layout="@layout/view_shop_type"/>
 
 </FrameLayout>

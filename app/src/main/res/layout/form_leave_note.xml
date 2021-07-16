@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/descriptionLabel"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="@string/create_new_note_description"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/hintLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create_new_note_hint"
-        />
+        <TextView
+            android:id="@+id/descriptionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/create_new_note_description" />
 
-    <EditText
-        android:id="@+id/noteInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:gravity="top|start"
-        android:layout_marginTop="8dp"
-        android:minLines="3"
-        android:background="@drawable/background_edittext_outline"
-        />
+        <TextView
+            android:id="@+id/hintLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_new_note_hint" />
 
-    <FrameLayout
-        android:id="@+id/attachPhotoFragment"
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/noteInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_edittext_outline"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/attachPhotoFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+</merge>

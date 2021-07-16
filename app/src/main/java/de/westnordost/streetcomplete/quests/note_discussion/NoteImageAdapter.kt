@@ -11,6 +11,7 @@ import androidx.core.view.doOnLayout
 import java.io.File
 
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.CellImageThumbnailBinding
 import de.westnordost.streetcomplete.util.decodeScaledBitmapAndNormalize
 import de.westnordost.streetcomplete.view.ListAdapter
 
@@ -18,24 +19,24 @@ class NoteImageAdapter(list: List<String>, private val context: Context) : ListA
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<String> {
         val inflater = LayoutInflater.from(parent.context)
-        return NoteImageViewHolder(inflater.inflate(R.layout.cell_image_thumbnail, parent, false))
+        return NoteImageViewHolder(CellImageThumbnailBinding.inflate(inflater, parent, false))
     }
 
-    private inner class NoteImageViewHolder(itemView: View) : ViewHolder<String>(itemView) {
+    private inner class NoteImageViewHolder(val binding: CellImageThumbnailBinding) : ViewHolder<String>(binding) {
 
-        private val imageView: ImageView = itemView.findViewById(R.id.imageView)
+//        private val imageView: ImageView = itemView.findViewById(R.id.imageView)
 
         init {
-            imageView.setOnClickListener {
+            binding.imageView.setOnClickListener {
                 val index = adapterPosition
                 if (index > -1) onClickDelete(index)
             }
         }
 
         override fun onBind(with: String) {
-            itemView.doOnLayout {
-                val bitmap = decodeScaledBitmapAndNormalize(with, imageView.width, imageView.height)
-                imageView.setImageBitmap(bitmap)
+            binding.root.doOnLayout {
+                val bitmap = decodeScaledBitmapAndNormalize(with, binding.imageView.width, binding.imageView.height)
+                binding.imageView.setImageBitmap(bitmap)
             }
         }
     }

@@ -11,31 +11,40 @@ import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.FragmentCreditsBinding
 import de.westnordost.streetcomplete.ktx.getYamlObject
-import kotlinx.android.synthetic.main.fragment_credits.*
-import kotlinx.coroutines.*
+import de.westnordost.streetcomplete.ktx.viewBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.sufficientlysecure.htmltextview.HtmlTextView
 
 /** Shows the credits of this app */
 class CreditsFragment : Fragment(R.layout.fragment_credits) {
 
+    private val binding by viewBinding(FragmentCreditsBinding::bind)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launch {
-            addContributorsTo(readMainContributors(), mainCredits)
-            addContributorsTo(readProjectsContributors(), projectsCredits)
-            addContributorsTo(readArtContributors(), artCredits)
-            addContributorsTo(readCodeContributors(), codeCredits)
+            addContributorsTo(readMainContributors(), binding.mainCredits)
+            addContributorsTo(readProjectsContributors(), binding.projectsCredits)
+            addContributorsTo(readArtContributors(), binding.artCredits)
+            addContributorsTo(readCodeContributors(), binding.codeCredits)
 
             val inflater = LayoutInflater.from(view.context)
             for ((language, translators) in readTranslators()) {
-                val item = inflater.inflate(R.layout.row_credits_translators, translationCredits, false)
+                val item = inflater.inflate(
+                    R.layout.row_credits_translators,
+                    binding.translationCredits,
+                    false
+                )
                 (item.findViewById<View>(R.id.language) as TextView).text = language
                 (item.findViewById<View>(R.id.contributors) as TextView).text = translators
-                translationCredits.addView(item)
+                binding.translationCredits.addView(item)
             }
         }
 
-        authorText.setHtml("Tobias Zwick (<a href=\"https://github.com/westnordost\">westnordost</a>)")
+        binding.authorText.setHtml("Tobias Zwick (<a href=\"https://github.com/westnordost\">westnordost</a>)")
 
         val translationCreditsMore = view.findViewById<HtmlTextView>(R.id.translationCreditsMore)
         translationCreditsMore.setHtml(getString(R.string.credits_translations))

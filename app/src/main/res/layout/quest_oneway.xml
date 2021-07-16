@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:showDividers="middle"
-    android:divider="@drawable/button_bar_divider">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/descriptionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quest_oneway_tutorial"
-        android:labelFor="@+id/nameInput"
-        android:paddingStart="@dimen/quest_form_horizontal_padding"
-        android:paddingEnd="@dimen/quest_form_horizontal_padding"
-        android:paddingTop="@dimen/quest_form_vertical_padding"
-        android:paddingBottom="@dimen/quest_form_vertical_padding"
-        />
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <de.westnordost.streetcomplete.view.StreetSideSelectPuzzle
-            android:id="@+id/puzzleView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/street_side_puzzle_height"
-            android:clipChildren="false"
-            android:clipToPadding="false"/>
+        android:layout_height="match_parent"
+        android:divider="@drawable/button_bar_divider"
+        android:orientation="vertical"
+        android:showDividers="middle">
 
-        <!-- note the other compass in fragment_main -->
-        <include layout="@layout/view_little_compass"/>
-    </RelativeLayout>
-</LinearLayout>
+        <TextView
+            android:id="@+id/descriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/nameInput"
+            android:paddingStart="@dimen/quest_form_horizontal_padding"
+            android:paddingTop="@dimen/quest_form_vertical_padding"
+            android:paddingEnd="@dimen/quest_form_horizontal_padding"
+            android:paddingBottom="@dimen/quest_form_vertical_padding"
+            android:text="@string/quest_oneway_tutorial" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.westnordost.streetcomplete.view.StreetSideSelectPuzzle
+                android:id="@+id/puzzleView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/street_side_puzzle_height"
+                android:clipChildren="false"
+                android:clipToPadding="false" />
+
+            <!-- note the other compass in fragment_main -->
+            <include layout="@layout/view_little_compass" />
+        </RelativeLayout>
+    </LinearLayout>
+</merge>

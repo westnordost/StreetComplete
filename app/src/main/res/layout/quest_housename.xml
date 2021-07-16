@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:divider="@drawable/space_8dp"
-              android:showDividers="middle">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/quest_address_house_name_label"/>
-
-    <me.grantland.widget.AutofitLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/background_white_corners"
-        >
+        android:divider="@drawable/space_8dp"
+        android:orientation="vertical"
+        android:showDividers="middle">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/houseNameInput"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/quest_address_house_name_label" />
+
+        <me.grantland.widget.AutofitLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_housenumber_frame"
-            app:backgroundTint="@color/traffic_blue"
-            android:inputType="text"
-            android:imeOptions="actionDone"
-            tools:text="My Cool House"
-            style="@style/HousenumberEditText"
-            />
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/background_white_corners">
 
-    </me.grantland.widget.AutofitLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/houseNameInput"
+                style="@style/HousenumberEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_housenumber_frame"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                app:backgroundTint="@color/traffic_blue"
+                tools:text="My Cool House" />
 
-</LinearLayout>
+        </me.grantland.widget.AutofitLayout>
+
+    </LinearLayout>
+</merge>

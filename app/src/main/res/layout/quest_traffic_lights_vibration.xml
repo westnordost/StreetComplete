@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:showDividers="middle"
-    android:divider="@drawable/space_16dp"
-    android:orientation="horizontal">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <ImageView
-        android:id="@+id/buttonIllustrationImageView"
-        android:layout_width="120dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/vibrating_button_illustration" />
+        android:divider="@drawable/space_16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:showDividers="middle">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="@string/quest_traffic_signals_vibrate_description"/>
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/buttonIllustrationImageView"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/vibrating_button_illustration" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quest_traffic_signals_vibrate_description" />
+
+    </LinearLayout>
+</merge>

@@ -15,10 +15,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import de.westnordost.streetcomplete.Injector
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.databinding.FragmentUnreadOsmMessageBinding
 import de.westnordost.streetcomplete.ktx.toPx
 import de.westnordost.streetcomplete.ktx.tryStartActivity
+import de.westnordost.streetcomplete.ktx.viewBinding
 import de.westnordost.streetcomplete.util.SoundFx
-import kotlinx.android.synthetic.main.fragment_unread_osm_message.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +27,8 @@ import javax.inject.Inject
 class OsmUnreadMessagesFragment : DialogFragment() {
 
     @Inject lateinit var soundFx: SoundFx
+
+    private val binding by viewBinding(FragmentUnreadOsmMessageBinding::bind)
 
     init {
         Injector.applicationComponent.inject(this)
@@ -43,14 +46,14 @@ class OsmUnreadMessagesFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // hide first, to avoid flashing
-        mailContainer.alpha = 0.0f
-        dialogContainer.setOnClickListener { dismiss() }
-        readMailButton.setOnClickListener {
+        binding.mailContainer.alpha = 0.0f
+        binding.dialogContainer.setOnClickListener { dismiss() }
+        binding.readMailButton.setOnClickListener {
             openUrl("https://www.openstreetmap.org/messages/inbox")
             dismiss()
         }
         val unreadMessagesCount = arguments?.getInt(ARG_UNREAD_MESSAGE_COUNT, 0) ?: 0
-        unreadMessagesTextView.text = getString(R.string.unread_messages_message, unreadMessagesCount)
+        binding.unreadMessagesTextView.text = getString(R.string.unread_messages_message, unreadMessagesCount)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -66,24 +69,24 @@ class OsmUnreadMessagesFragment : DialogFragment() {
 
         lifecycleScope.launch { soundFx.play(R.raw.sliding_envelope) }
 
-        mailFrontImageView.alpha = 0f
+        binding.mailFrontImageView.alpha = 0f
 
-        speechbubbleContentContainer.alpha = 0.0f
-        speechbubbleContentContainer.visibility = View.VISIBLE
-        speechbubbleContentContainer.scaleX = 0.8f
-        speechbubbleContentContainer.scaleY = 0.8f
-        speechbubbleContentContainer.translationY = 140f.toPx(ctx)
+        binding.speechbubbleContentContainer.alpha = 0.0f
+        binding.speechbubbleContentContainer.visibility = View.VISIBLE
+        binding.speechbubbleContentContainer.scaleX = 0.8f
+        binding.speechbubbleContentContainer.scaleY = 0.8f
+        binding.speechbubbleContentContainer.translationY = 140f.toPx(ctx)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            (mailOpenImageView.drawable as? AnimatedVectorDrawable)?.reset()
+            (binding.mailOpenImageView.drawable as? AnimatedVectorDrawable)?.reset()
         }
 
-        mailContainer.rotation = -40f
-        mailContainer.rotationY = -45f
-        mailContainer.alpha = 0.2f
-        mailContainer.translationX = (-400f).toPx(ctx)
-        mailContainer.translationY = (60f).toPx(ctx)
-        mailContainer.animate()
+        binding.mailContainer.rotation = -40f
+        binding.mailContainer.rotationY = -45f
+        binding.mailContainer.alpha = 0.2f
+        binding.mailContainer.translationX = (-400f).toPx(ctx)
+        binding.mailContainer.translationY = (60f).toPx(ctx)
+        binding.mailContainer.animate()
             .setDuration(400)
             .setStartDelay(200)
             .setInterpolator(DecelerateInterpolator())
@@ -93,18 +96,18 @@ class OsmUnreadMessagesFragment : DialogFragment() {
             .withEndAction {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    (mailOpenImageView?.drawable as? AnimatedVectorDrawable)?.start()
+                    (binding.mailOpenImageView?.drawable as? AnimatedVectorDrawable)?.start()
                 }
 
-                mailFrontImageView?.animate()?.run {
+                binding.mailFrontImageView?.animate()?.run {
                     duration = 100
                     startDelay = 100
                     alpha(1f)
                     start()
                 }
 
-                speechbubbleContentContainer?.animate()?.run {
-                    withStartAction { speechbubbleContentContainer?.alpha = 0.4f }
+                binding.speechbubbleContentContainer?.animate()?.run {
+                    withStartAction { binding.speechbubbleContentContainer?.alpha = 0.4f }
                     startDelay = 200
                     duration = 300
                     scaleX(1f)

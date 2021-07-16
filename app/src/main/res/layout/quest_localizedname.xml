@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/descriptionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quest_streetName_description"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/namesList"
-        android:background="@drawable/background_roadname_indented"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        tools:listitem="@layout/quest_localizedname_row"
-        />
+        android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/addLanguageButton"
-        android:src="@drawable/ic_add_24dp"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        tools:ignore="HardcodedText"/>
+        <TextView
+            android:id="@+id/descriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quest_streetName_description" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/namesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/background_roadname_indented"
+            tools:listitem="@layout/quest_localizedname_row" />
+
+        <ImageButton
+            android:id="@+id/addLanguageButton"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_24dp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+</merge>

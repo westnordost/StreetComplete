@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 <RadioGroup
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/radioButtonGroup">
@@ -34,3 +34,4 @@
         android:text="@string/quest_drinking_water_not_potable_unsigned" />
 
 </RadioGroup>
+</merge>
