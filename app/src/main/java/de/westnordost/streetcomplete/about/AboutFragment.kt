@@ -57,6 +57,10 @@ class AboutFragment : PreferenceFragmentCompat() {
             openUrl("https://github.com/streetcomplete/StreetComplete/")
         }
 
+        findPreference<Preference>("faq")?.setOnPreferenceClickListener {
+            openUrl("https://wiki.openstreetmap.org/wiki/StreetComplete/FAQ")
+        }
+
         findPreference<Preference>("translate")?.summary = resources.getString(
             R.string.about_description_translate,
             Locale.getDefault().displayLanguage,

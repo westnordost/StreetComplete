@@ -101,6 +101,8 @@
     <string name="about_summary_authors">"© 2016–2021 Tobias Zwick and contributors"</string>
     <string name="about_title_repository">"Source Repository"</string>
     <string name="about_summary_repository">"on GitHub"</string>
+    <string name="about_title_faq">"FAQ"</string>
+    <string name="about_summary_faq">"Please read these first."</string>
     <string name="about_title_report_error">"Report error"</string>
     <string name="about_title_feedback">"Give Feedback"</string>
     <string name="about_title_license">"License"</string>
